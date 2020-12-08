@@ -19,12 +19,20 @@ class PushWord {
     // 버튼 클릭이벤트 핸들러(입력값 받아서 배열로 반환)
     getInputArr(e) { 
         e.preventDefault();
-        const text = this.step1Text.value;
-        console.log(text.split(' '));
+        const arr = this.step1Text.value.split(' ');
+        [this.word, this.num, this.way] = [arr[0], arr[1], arr[2]];
+        this.step1Text.value = '';
+        this.fixInputArr();
     }
-    // 음수 → 양수, 소문자 → 대문자
+    // 소문자 → 대문자, 음수 → 양수
     fixInputArr() {
-
+        if(this.way === 'l') this.way = 'L';
+        else if(this.way === 'r') this.way = 'R';
+        if(this.num < 0) {
+            this.num = Math.abs(this.num);
+            if(this.way === 'L') this.way = 'R';
+            else if(this.way === 'R') this.way = 'L';
+        }
     }
     // 문자의 길이로 나눈 나머지로 이동거리 구하기
     getDistance() {
