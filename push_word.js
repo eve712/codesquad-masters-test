@@ -9,17 +9,18 @@ class WordData {
         this.result;
     }
     main(value) {
-        this.createInputArr(value);
-        this.fixInputArr();
+        this.assignProperty(value);
+        this.fixProperty();
         this.setDistance();
+        this.processWord();
     }
     // input 입력값 받아서 배열로 반환
-    createInputArr(value) { 
+    assignValue(value) { 
         const arr = value.split(' ');
         [this.word, this.num, this.way] = [arr[0], arr[1], arr[2]];   
     }
     // 소문자 → 대문자, 음수 → 양수
-    fixInputArr() {
+    fixValue() {
         if(this.way === 'l') this.way = 'L';
         else if(this.way === 'r') this.way = 'R';
         if(this.num < 0) {
@@ -36,24 +37,25 @@ class WordData {
         else this.distance = num;
     }
     // R일 때, pop, unshift를 distance번 반복해서 밀어내기
-    popWord() {
+    // L일 때, shift, push를 distance번 반복해서 밀어내기
+    processWord() {
         let wordArr = this.word.split('');
         let times = 0;
         while(++times <= this.distance) {
-            let popped = wordArr.pop();
-            wordArr.unshift(popped);
+            if(this.way === 'R') wordArr = this.popWord(wordArr);
+            else wordArr = this.shiftWord(wordArr);
         }
         this.result = wordArr.join('');
     }
-    // L일 때, shift, push를 distance번
-    shiftWord() {
-        let wordArr = this.word.split('');
-        let times = 0;
-        while(++times <= this.distance) {
+    popWord(wordArr) {
+            let popped = wordArr.pop();
+            wordArr.unshift(popped);
+            return wordArr;
+    }
+    shiftWord(wordArr) {
             let shifted = wordArr.shift();
             wordArr.push(shifted);
-        }
-        this.result = wordArr.join('');
+            return wordArr;
     }
 }
 
