@@ -14,10 +14,10 @@ class PushWord {
     }
     // submit버튼 클릭 이벤트
     initEvent() {
-        this.step1Btn.addEventListener("click", this.getInputArr.bind(this));
+        this.step1Btn.addEventListener("click", this.createInputArr.bind(this));
     }
     // 버튼 클릭이벤트 핸들러(입력값 받아서 배열로 반환)
-    getInputArr(e) { 
+    createInputArr(e) { 
         e.preventDefault();
         const arr = this.step1Text.value.split(' ');
         [this.word, this.num, this.way] = [arr[0], arr[1], arr[2]];
@@ -35,10 +35,11 @@ class PushWord {
         }
     }
     // 문자의 길이로 나눈 나머지로 이동거리 구하기
-    getDistance() {
-
+    setDistance() {
+        const length = this.word.length;
+        if(num >= length) this.distance = num % length;
+        else this.distance = num;
     }
-    
     // R일 때, pop, unshift를 distance번
     // L일 때, shift, push를 distance번
 
