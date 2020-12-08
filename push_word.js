@@ -89,7 +89,10 @@ class ViewWord {
 const reference = {
     step1Text: document.getElementById('step1'),
     step1Btn: document.getElementById('step1_btn'),
-    step1Result: document.getElementById('step1_result')
+    step1Result: document.getElementById('step1_result'),
+    step2Text: document.getElementById('step2'),
+    step2Btn: document.getElementById('step2_btn'),
+    step2Result: document.getElementById('step2_result')
 };
 
 // -------------● 실행 ●-------------
