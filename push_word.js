@@ -9,10 +9,11 @@ class WordData {
         this.result;
     }
     main(value) {
-        this.assignProperty(value);
-        this.fixProperty();
+        this.assignValue(value);
+        this.fixValue();
         this.setDistance();
         this.processWord();
+        return this.result;
     }
     // input 입력값 받아서 배열로 반환
     assignValue(value) { 
@@ -65,7 +66,9 @@ class ViewWord {
     constructor(reference, wordData) {
         this.step1Text = reference.step1Text;
         this.step1Btn = reference.step1Btn;
+        this.step1Result = reference.step1Result;
         this.wordData = wordData;
+        this.result;
     }
     // submit버튼 클릭 이벤트
     setEvent() {
@@ -75,11 +78,15 @@ class ViewWord {
     handleData(e) {
         e.preventDefault();
         const value = this.step1Text.value;
-        this.wordData.main(value);
+        this.result = this.wordData.main(value);
         this.step1Text.value = '';
+        this.viewResult();
     }
     viewResult() {
-
+        const el = document.createElement('div');
+        const text = document.createTextNode(this.result);
+        el.appendChild(text);
+        this.step1Result.appendChild(el);
     }
 }
 
@@ -87,7 +94,8 @@ class ViewWord {
 // -----------● DOM 참조 ●------------
 const reference = {
     step1Text: document.getElementById('step1'),
-    step1Btn: document.getElementById('step1_btn')
+    step1Btn: document.getElementById('step1_btn'),
+    step1Result: document.getElementById('step1_result')
 };
 
 
