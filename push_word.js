@@ -25,7 +25,7 @@ class PushWord {
         this.step1Text.value = '';
         this.fixInputArr();
         this.setDistance();
-        this.popWord();
+        this.shiftWord();
     }
     // 소문자 → 대문자, 음수 → 양수
     fixInputArr() {
@@ -55,6 +55,15 @@ class PushWord {
         this.result = wordArr.join('');
     }
     // L일 때, shift, push를 distance번
+    shiftWord() {
+        let wordArr = this.word.split('');
+        let times = 0;
+        while(++times <= this.distance) {
+            let shifted = wordArr.shift();
+            wordArr.push(shifted);
+        }
+        this.result = wordArr.join('');
+    }
 
     // 결과 화면에 출력
     viewResult() {
