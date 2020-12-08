@@ -1,31 +1,22 @@
-const reference = {
-    step1Text: document.getElementById('step1'),
-    step1Btn: document.getElementById('step1_btn')
-};
 
-class PushWord {
-    constructor(reference) {
-        this.step1Text = reference.step1Text;
-        this.step1Btn = reference.step1Btn;
+// ---------------------● Word Data ●-----------------------
+class WordData {
+    constructor() {
         this.word;
         this.num;
         this.way;
         this.distance;
         this.result;
     }
-    // submit버튼 클릭 이벤트
-    initEvent() {
-        this.step1Btn.addEventListener("click", this.createInputArr.bind(this));
-    }
-    // 버튼 클릭이벤트 핸들러(입력값 받아서 배열로 반환)
-    createInputArr(e) { 
-        e.preventDefault();
-        const arr = this.step1Text.value.split(' ');
-        [this.word, this.num, this.way] = [arr[0], arr[1], arr[2]];
-        this.step1Text.value = '';
+    main(value) {
+        this.createInputArr(value);
         this.fixInputArr();
         this.setDistance();
-        this.shiftWord();
+    }
+    // input 입력값 받아서 배열로 반환
+    createInputArr(value) { 
+        const arr = value.split(' ');
+        [this.word, this.num, this.way] = [arr[0], arr[1], arr[2]];   
     }
     // 소문자 → 대문자, 음수 → 양수
     fixInputArr() {
@@ -64,13 +55,43 @@ class PushWord {
         }
         this.result = wordArr.join('');
     }
+}
 
-    // 결과 화면에 출력
+
+// ---------------------● View Word ●-----------------------
+class ViewWord {
+    constructor(reference, wordData) {
+        this.step1Text = reference.step1Text;
+        this.step1Btn = reference.step1Btn;
+        this.wordData = wordData;
+    }
+    // submit버튼 클릭 이벤트
+    setEvent() {
+        this.step1Btn.addEventListener("click", this.handleData.bind(this));
+    }
+    // value를 data클래스에 보내서 데이터 처리
+    handleData(e) {
+        e.preventDefault();
+        const value = this.step1Text.value;
+        this.wordData.main(value);
+        this.step1Text.value = '';
+    }
     viewResult() {
 
     }
 }
-const pushWord = new PushWord(reference);
-pushWord.initEvent();
 
+
+// -----------● DOM 참조 ●------------
+const reference = {
+    step1Text: document.getElementById('step1'),
+    step1Btn: document.getElementById('step1_btn')
+};
+
+
+// -------------● 실행 ●-------------
+const wordData = new WordData();
+
+const viewWord = new ViewWord(reference, wordData);
+viewWord.setEvent();
 
