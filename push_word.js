@@ -1,4 +1,3 @@
-
 // ---------------------● Word Data ●-----------------------
 class WordData {
     constructor() {
@@ -59,8 +58,6 @@ class WordData {
             return wordArr;
     }
 }
-
-
 // ---------------------● View Word ●-----------------------
 class ViewWord {
     constructor(reference, wordData) {
@@ -89,8 +86,6 @@ class ViewWord {
         this.step1Result.appendChild(el);
     }
 }
-
-
 // -----------● DOM 참조 ●------------
 const reference = {
     step1Text: document.getElementById('step1'),
@@ -98,10 +93,8 @@ const reference = {
     step1Result: document.getElementById('step1_result')
 };
 
-
 // -------------● 실행 ●-------------
 const wordData = new WordData();
-
 const viewWord = new ViewWord(reference, wordData);
 viewWord.setEvent();
 
