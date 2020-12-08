@@ -11,6 +11,7 @@ class PushWord {
         this.num;
         this.way;
         this.distance;
+        this.result;
     }
     // submit버튼 클릭 이벤트
     initEvent() {
@@ -23,6 +24,8 @@ class PushWord {
         [this.word, this.num, this.way] = [arr[0], arr[1], arr[2]];
         this.step1Text.value = '';
         this.fixInputArr();
+        this.setDistance();
+        this.popWord();
     }
     // 소문자 → 대문자, 음수 → 양수
     fixInputArr() {
@@ -37,10 +40,20 @@ class PushWord {
     // 문자의 길이로 나눈 나머지로 이동거리 구하기
     setDistance() {
         const length = this.word.length;
+        const num = this.num;
         if(num >= length) this.distance = num % length;
         else this.distance = num;
     }
-    // R일 때, pop, unshift를 distance번
+    // R일 때, pop, unshift를 distance번 반복해서 밀어내기
+    popWord() {
+        let wordArr = this.word.split('');
+        let times = 0;
+        while(++times <= this.distance) {
+            let popped = wordArr.pop();
+            wordArr.unshift(popped);
+        }
+        this.result = wordArr.join('');
+    }
     // L일 때, shift, push를 distance번
 
     // 결과 화면에 출력
