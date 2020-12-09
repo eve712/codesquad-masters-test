@@ -12,11 +12,11 @@ class PlaneCubeData {
     // view로부터 배열을 전달받아 순서대로 함수 실행, 데이터 처리
     main(value) {
         this.tokenize(value);
-        this.inputArr.forEach(el => {
-            this.pickArr(el);
-            this.decideWay(el);
+        this.inputArr.forEach(v => {
+            this.pickArr(v);
+            this.decideWay(v);
             this.processArr();
-            this.fixDataArr(el);
+            this.fixDataArr(v);
         });
     }
     // 입력을 받아 의미 단위로 쪼개 inputArr 만드는 함수
@@ -31,16 +31,16 @@ class PlaneCubeData {
         else this.inputArr = valueArr;
     }
     // 사용자의 입력에 따라 처리할 배열 선택
-    pickArr(el) {
+    pickArr(v) {
         const data = this.dataArr;
-        if(el === 'U'||el === 'U\'') this.currArr = data[0];
-        else if(el === 'B'||el ==='B\'') this.currArr = data[2];
-        else if(el === 'L'||el ==='L\'') this.currArr = data.map(arr => arr[0]);
+        if(v === 'U'||v === 'U\'') this.currArr = data[0];
+        else if(v === 'B'||v ==='B\'') this.currArr = data[2];
+        else if(v === 'L'||v ==='L\'') this.currArr = data.map(arr => arr[0]);
         else this.currArr = data.map(arr => arr[2]);
     }
     // 조작에 따라 방향 정하기 (1,R), (1,L)
-    decideWay(el) {
-        if(el ==='U\''||el ==='B'||el ==='L'||el ==='R\'') this.way = 'R';
+    decideWay(v) {
+        if(v ==='U\''||v ==='B'||v ==='L'||v ==='R\'') this.way = 'R';
         else this.way = 'L';
     }
     // step-1에 있는 함수 사용 ex: [R, R, W], 1, R
@@ -50,11 +50,11 @@ class PlaneCubeData {
         this.currArr = result;
     }
     // 처리된 배열을 dataArr에 대입해서 데이터 변경
-    fixDataArr(el) {
+    fixDataArr(v) {
         const result = this.currArr;
-        if(el === 'U'||el === 'U\'') this.dataArr[0] = result;
-        else if(el === 'B'||el ==='B\'') this.dataArr[2] = result;
-        else if(el === 'L'||el ==='L\'') this.dataArr.forEach((arr, i) => arr[0] = result[i]);
+        if(v === 'U'||v === 'U\'') this.dataArr[0] = result;
+        else if(v === 'B'||v ==='B\'') this.dataArr[2] = result;
+        else if(v === 'L'||v ==='L\'') this.dataArr.forEach((arr, i) => arr[0] = result[i]);
         else this.dataArr.forEach((arr, i) => arr[2] = result[i]);
     }
     // 화면에 출력
