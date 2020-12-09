@@ -8,6 +8,7 @@ class PlaneCubeData {
         this.inputArr = [];  //사용자가 입력한 조작법
         this.currArr = [];   //조작할 1차원 배열
         this.way;
+        this.allResults = [];
     }
     // view로부터 배열을 전달받아 순서대로 함수 실행, 데이터 처리
     main(value) {
@@ -17,7 +18,10 @@ class PlaneCubeData {
             this.decideWay(v);
             this.processArr();
             this.fixDataArr(v);
+            this.allResults.push(this.dataArr);
         });
+        const data = {input: this.inputArr, result: this.allResults};
+        return data;
     }
     // 입력을 받아 의미 단위로 쪼개 inputArr 만드는 함수
     tokenize(value) {
@@ -67,7 +71,8 @@ class ViewPlaneCube {
         this.step2Btn = reference.step2Btn;
         this.step2Result = reference.step2Result;
         this.planeCubeData = planeCubeData;
-        this.result;
+        this.inputArr = [];
+        this.allResults = [];
     }
     // submit버튼 클릭 이벤트
     setEvent() {
@@ -77,7 +82,9 @@ class ViewPlaneCube {
     handleData(e) {
         e.preventDefault();
         const value = this.step2Text.value;
-        this.result = this.planeCubeData.main(value);
+        const data = this.planeCubeData.main(value);
+        this.inputArr = data.input;
+        this.allResults = data.result;
         this.step2Text.value = '';
         this.viewResult();
     }
