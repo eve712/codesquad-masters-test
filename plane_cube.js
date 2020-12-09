@@ -3,12 +3,14 @@ class PlaneCubeData {
         this.dataArr = [['R','R','W'], ['G','C','W'], ['G','B','B']];
         this.inputArr = [];  //사용자가 입력한 조작법
         this.currArr = [];   //조작할 1차원 배열
+        this.way;
     }
     // view로부터 배열을 전달받아 순서대로 함수 실행, 데이터 처리
     main(value) {
         this.tokenize(value);
         this.inputArr.forEach(el => {
             this.pickArr(el);
+            this.decideWay(el);
         });
     }
     tokenize(value) {
@@ -29,6 +31,10 @@ class PlaneCubeData {
         else this.currArr = dataArr.map(el => el[2]);
     }
     // 조작에 따라 방향 정하기 (1,R), (1,L)
+    decideWay(el) {
+        if(el ==='U\''||el ==='B'||el ==='L'||el ==='R\'') this.way = 'R';
+        else this.way = 'L';
+    }
     // step-1에 있는 함수 사용 ex: [R, R, W], 1, R
     // 처리된 배열을 dataArr에 대입해서 데이터 변경
     // 화면에 출력
