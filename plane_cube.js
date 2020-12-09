@@ -8,7 +8,6 @@ class PlaneCubeData {
         this.inputArr = [];  //사용자가 입력한 조작법
         this.currArr = [];   //조작할 1차원 배열
         this.way;
-        this.resultArr = [];
     }
     // view로부터 배열을 전달받아 순서대로 함수 실행, 데이터 처리
     main(value) {
@@ -17,7 +16,7 @@ class PlaneCubeData {
             this.pickArr(el);
             this.decideWay(el);
             this.processArr();
-            
+            this.fixDataArr(el);
         });
     }
     // 입력을 받아 의미 단위로 쪼개 inputArr 만드는 함수
@@ -33,10 +32,11 @@ class PlaneCubeData {
     }
     // 사용자의 입력에 따라 처리할 배열 선택
     pickArr(el) {
-        if(el === 'U'||el === 'U\'') this.currArr = dataArr[0];
-        else if(el === 'B'||el ==='B\'') this.currArr = dataArr[2];
-        else if(el === 'L'||el ==='L\'') this.currArr = dataArr.map(el => el[0]);
-        else this.currArr = dataArr.map(el => el[2]);
+        const data = this.dataArr;
+        if(el === 'U'||el === 'U\'') this.currArr = data[0];
+        else if(el === 'B'||el ==='B\'') this.currArr = data[2];
+        else if(el === 'L'||el ==='L\'') this.currArr = data.map(arr => arr[0]);
+        else this.currArr = data.map(arr => arr[2]);
     }
     // 조작에 따라 방향 정하기 (1,R), (1,L)
     decideWay(el) {
@@ -45,10 +45,18 @@ class PlaneCubeData {
     }
     // step-1에 있는 함수 사용 ex: [R, R, W], 1, R
     processArr() {
-        //call메서드 사용해야할수도
-        this.resultArr = this.wordData.getResultArr(this.currArr, 1, this.way); 
+        //call메서드 사용해야할 수 도
+        const result = this.wordData.getResultArr(this.currArr, 1, this.way); 
+        this.currArr = result;
     }
     // 처리된 배열을 dataArr에 대입해서 데이터 변경
+    fixDataArr(el) {
+        const result = this.currArr;
+        if(el === 'U'||el === 'U\'') this.dataArr[0] = result;
+        else if(el === 'B'||el ==='B\'') this.dataArr[2] = result;
+        else if(el === 'L'||el ==='L\'') this.dataArr.forEach((arr, i) => arr[0] = result[i]);
+        else this.dataArr.forEach((arr, i) => arr[2] = result[i]);
+    }
     // 화면에 출력
 }
 
