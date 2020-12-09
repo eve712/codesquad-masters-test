@@ -1,9 +1,14 @@
+// ----수정할 것----
+// this.inputArr를 tokenize의 반환값으로 만들어서 main함수 내에서만 사용하도록.
+
 class PlaneCubeData {
-    constructor() {
+    constructor(wordData) {
+        this.wordData = wordData;
         this.dataArr = [['R','R','W'], ['G','C','W'], ['G','B','B']];
         this.inputArr = [];  //사용자가 입력한 조작법
         this.currArr = [];   //조작할 1차원 배열
         this.way;
+        this.resultArr = [];
     }
     // view로부터 배열을 전달받아 순서대로 함수 실행, 데이터 처리
     main(value) {
@@ -11,8 +16,11 @@ class PlaneCubeData {
         this.inputArr.forEach(el => {
             this.pickArr(el);
             this.decideWay(el);
+            this.processArr();
+            
         });
     }
+    // 입력을 받아 의미 단위로 쪼개 inputArr 만드는 함수
     tokenize(value) {
         const valueArr = value.split('');
         const idx = [];
@@ -36,6 +44,10 @@ class PlaneCubeData {
         else this.way = 'L';
     }
     // step-1에 있는 함수 사용 ex: [R, R, W], 1, R
+    processArr() {
+        //call메서드 사용해야할수도
+        this.resultArr = this.wordData.getResultArr(this.currArr, 1, this.way); 
+    }
     // 처리된 배열을 dataArr에 대입해서 데이터 변경
     // 화면에 출력
 }
@@ -68,6 +80,6 @@ class ViewPlaneCube {
 }
 
 // -------------● 실행 ●-------------
-const planeCubeData = new PlaneCubeData();
+const planeCubeData = new PlaneCubeData(wordData);
 const viewPlaneCube = new ViewPlaneCube(reference, planeCubeData);
 viewPlaneCube.setEvent();
