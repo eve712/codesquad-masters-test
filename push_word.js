@@ -40,11 +40,10 @@ class WordData {
     // L일 때, shift, push를 distance번 반복해서 밀어내기
     getResultArr(arr, distance, way) {
         let times = 0;
-        while(++times <= this.distance) {
-            if(this.way === 'R') wordArr = this.popWord(wordArr);
-            else wordArr = this.shiftWord(wordArr);
+        while(++times <= distance) {
+            if(way === 'R') arr = this.popItem(arr);
+            else arr = this.shiftItem(arr);
         }
-        this.result = wordArr.join('');
         return arr;
     }
     popItem(arr) {
