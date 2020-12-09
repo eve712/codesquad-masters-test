@@ -1,10 +1,22 @@
 class PlaneCubeData {
     constructor() {
-        this.dataArr = [[R, R, W], [G, C, W], [G, B, B]];
+        this.dataArr = [['R','R','W'], ['G','C','W'], ['G','B','B']];
+        this.inputArr = [];
     }
     // view로부터 배열을 전달받아 순서대로 함수 실행, 데이터 처리
-    main() {
-
+    main(value) {
+        this.tokenize(value);
+    }
+    // value: input에서 받은 string
+    tokenize(value) {
+        const valueArr = value.split('');
+        const idx = [];
+        valueArr.forEach((el, i) => {if(el === '\'') idx.push(i)});
+        if(idx.length > 0) {
+            idx.forEach(idx => valueArr[idx - 1] += '\'');
+            this.inputArr = valueArr.filter(el => el !== '\'');
+        }
+        else this.inputArr = valueArr;
     }
     // 사용자의 입력에 따라 처리할 배열 선택
     pickArr() {
@@ -23,6 +35,7 @@ class ViewPlaneCube {
         this.step2Btn = reference.step2Btn;
         this.step2Result = reference.step2Result;
         this.planeCubeData = planeCubeData;
+        this.result;
     }
     // submit버튼 클릭 이벤트
     setEvent() {
@@ -45,3 +58,4 @@ class ViewPlaneCube {
 // -------------● 실행 ●-------------
 const planeCubeData = new PlaneCubeData();
 const viewPlaneCube = new ViewPlaneCube(reference, planeCubeData);
+viewPlaneCube.setEvent();
