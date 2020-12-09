@@ -16,19 +16,25 @@ class PlaneCubeData {
     // 화면에 출력
 }
 
+// step-1의 view클래스와 비슷한 함수 재활용하기
 class ViewPlaneCube {
-    constructor(reference) {
+    constructor(reference, planeCubeData) {
         this.step2Text = reference.step2Text;
         this.step2Btn = reference.step2Btn;
         this.step2Result = reference.step2Result;
+        this.planeCubeData = planeCubeData;
     }
     // submit버튼 클릭 이벤트
     setEvent() {
-        this.step2Btn.addEventListener("click", );
+        this.step2Btn.addEventListener("click", this.handleData.bind(this) );
     }
     // value를 배열로 만들어 data로 보내기
-    handleData() {
-
+    handleData(e) {
+        e.preventDefault();
+        const value = this.step2Text.value;
+        this.result = this.planeCubeData.main(value);
+        this.step2Text.value = '';
+        this.viewResult();
     }
     // 결과를 화면에 출력
     viewResult() {
@@ -38,4 +44,4 @@ class ViewPlaneCube {
 
 // -------------● 실행 ●-------------
 const planeCubeData = new PlaneCubeData();
-const viewPlaneCube = new ViewPlaneCube(reference);
+const viewPlaneCube = new ViewPlaneCube(reference, planeCubeData);
