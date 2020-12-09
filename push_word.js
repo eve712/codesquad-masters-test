@@ -5,19 +5,19 @@ class WordData {
         this.num;
         this.way;
         this.distance;
-        this.result;
+        this.resultArr;
     }
     main(value) {
         this.assignValue(value);
         this.fixValue();
         this.setDistance();
-        this.processWord();
-        return this.result;
+        this.resultArr = this.getResultArr(this.wordArr, this.distance, this.way);
+        return this.resultArr.join('');
     }
     // input 입력값 받아서 배열로 반환
     assignValue(value) { 
         const arr = value.split(' ');
-        [this.word, this.num, this.way] = [arr[0], arr[1], arr[2]];   
+        [this.wordArr, this.num, this.way] = [arr[0].split(''), arr[1], arr[2]];   
     }
     // 소문자 → 대문자, 음수 → 양수
     fixValue() {
@@ -31,31 +31,31 @@ class WordData {
     }
     // 문자의 길이로 나눈 나머지로 이동거리 구하기
     setDistance() {
-        const length = this.word.length;
+        const length = this.wordArr.length;
         const num = this.num;
         if(num >= length) this.distance = num % length;
         else this.distance = num;
     }
     // R일 때, pop, unshift를 distance번 반복해서 밀어내기
     // L일 때, shift, push를 distance번 반복해서 밀어내기
-    processWord() {
-        let wordArr = this.word.split('');
+    getResultArr(arr, distance, way) {
         let times = 0;
         while(++times <= this.distance) {
             if(this.way === 'R') wordArr = this.popWord(wordArr);
             else wordArr = this.shiftWord(wordArr);
         }
         this.result = wordArr.join('');
+        return arr;
     }
-    popWord(wordArr) {
-            let popped = wordArr.pop();
-            wordArr.unshift(popped);
-            return wordArr;
+    popItem(arr) {
+            let popped = arr.pop();
+            arr.unshift(popped);
+            return arr;
     }
-    shiftWord(wordArr) {
-            let shifted = wordArr.shift();
-            wordArr.push(shifted);
-            return wordArr;
+    shiftItem(arr) {
+            let shifted = arr.shift();
+            arr.push(shifted);
+            return arr;
     }
 }
 // ---------------------● View Word ●-----------------------
