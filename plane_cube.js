@@ -90,7 +90,12 @@ class ViewPlaneCube {
     }
     // 결과를 화면에 출력
     viewResult() {
-
+        this.step2Result.innerHTML += this.allResults.forEach((dataArr, i) =>{
+            `<div>${this.inputArr[i]}</div>
+            <div>${dataArr[0]}</div>
+            <div>${dataArr[1]}</div>
+            <div>${dataArr[2]}</div>`;
+        });
     }
 }
 
