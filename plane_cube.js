@@ -1,12 +1,10 @@
-// ----수정할 것----
-// this.inputArr를 tokenize의 반환값으로 만들어서 main함수 내에서만 사용하도록.
-
+// ---------------------● Plane Cube Data ●-----------------------
 class PlaneCubeData {
     constructor(wordData) {
         this.wordData = wordData;
         this.dataArr = [['R','R','W'], ['G','C','W'], ['G','B','B']];
         this.inputArr = [];  //사용자가 입력한 조작법
-        this.currArr = [];   //조작할 1차원 배열
+        this.currArr = [];  //조작할 1차원 배열
         this.way;
         this.allResults = [];
     }
@@ -16,9 +14,10 @@ class PlaneCubeData {
         this.inputArr.forEach(v => {
             this.pickArr(v);
             this.decideWay(v);
-            this.processArr();
-            this.fixDataArr(v);
-            this.allResults.push(this.dataArr);
+            this.processArr(); 
+            this.fixDataArr(v); 
+            let copied = JSON.parse(JSON.stringify(this.dataArr));
+            this.allResults.push(copied);
         });
         const data = {input: this.inputArr, result: this.allResults};
         return data;
@@ -61,7 +60,7 @@ class PlaneCubeData {
         else this.dataArr.forEach((arr, i) => arr[2] = result[i]);
     }
 }
-
+// ---------------------● View Plane Cube ●-----------------------
 class ViewPlaneCube {
     constructor(reference, planeCubeData) {
         this.step2Text = reference.step2Text;
@@ -71,11 +70,9 @@ class ViewPlaneCube {
         this.inputArr = [];
         this.allResults = [];
     }
-    // submit버튼 클릭 이벤트
     setEvent() {
         this.step2Btn.addEventListener("click", this.handleData.bind(this) );
     }
-    // value를 배열로 만들어 data로 보내기
     handleData(e) {
         e.preventDefault();
         const value = this.step2Text.value;
@@ -85,14 +82,13 @@ class ViewPlaneCube {
         this.step2Text.value = '';
         this.viewResult();
     }
-    // 결과를 화면에 출력
     viewResult() {
         this.allResults.forEach((dataArr, i) =>{
             this.step2Result.innerHTML +=
             `<div>${this.inputArr[i]}</div>
-            <div>${dataArr[0]}</div>
-            <div>${dataArr[1]}</div>
-            <div>${dataArr[2]}</div><br>`;
+            <div>${dataArr[0].join('')}</div>
+            <div>${dataArr[1].join('')}</div>
+            <div>${dataArr[2].join('')}</div><br>`;
         });
     }
 }
