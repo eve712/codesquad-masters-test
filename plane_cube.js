@@ -38,8 +38,7 @@ class PlaneCubeData {
         if(indexOfQ !== -1) {
             this.inputArr.splice(indexOfQ);
             return true;
-        }
-        return false;
+        } else return false;
     }
     // 사용자의 입력에 따라 처리할 배열 선택
     pickArr(v) {
@@ -76,7 +75,6 @@ class ViewPlaneCube {
         this.step2Result = reference.step2Result;
         this.planeCubeData = planeCubeData;
         this.inputArr = [];
-        this.allResults = [];
     }
     setEvent() {
         this.step2Btn.addEventListener("click", this.handleData.bind(this) );
@@ -84,30 +82,41 @@ class ViewPlaneCube {
     handleData(e) {
         e.preventDefault();
         const value = this.step2Text.value;
-        this.viewDefault(value);
-        const data = this.planeCubeData.main(value);
-        this.inputArr = data.input;
-        this.allResults = data.result;
+        if(value ==='Q') this.quit();
+        else {
+            const init = JSON.parse(JSON.stringify(this.planeCubeData.dataArr));
+            const data = this.planeCubeData.main(value);
+            this.viewAll(data, init);
+        }
         this.step2Text.value = '';
-        this.viewResult();
     }
-    viewDefault(value) {
-        const dataArr = this.planeCubeData.dataArr;
+    viewAll(data, init) {
+        this.inputArr = data.input;
+        this.viewDefault(init);
+        this.viewResult(data.result);
+        if(data.q) this.quit();
+    }
+    viewDefault(init) {
         this.step2Result.innerHTML += 
         `<div>----------------</div>
-        <div>${dataArr[0].join('')}</div>
-        <div>${dataArr[1].join('')}</div>
-        <div>${dataArr[2].join('')}</div><br>
-        <div>CUBE> ${value}</div><br>`;
+        <div>${init[0].join('')}</div>
+        <div>${init[1].join('')}</div>
+        <div>${init[2].join('')}</div><br>
+        <div>CUBE> ${this.inputArr.join('')}</div><br>`;
     }
-    viewResult() {
-        this.allResults.forEach((dataArr, i) =>{
+    viewResult(allResults) {
+        allResults.forEach((dataArr, i) =>{
             this.step2Result.innerHTML +=
             `<div>${this.inputArr[i]}</div>
             <div>${dataArr[0].join('')}</div>
             <div>${dataArr[1].join('')}</div>
             <div>${dataArr[2].join('')}</div><br>`;
         });
+    }
+    quit() {
+        this.step2Result.innerHTML += 
+        `<div>CUBE> Q</div>
+        <div>Bye~</div><br>`;
     }
 }
 // -------------● 실행 ●-------------
