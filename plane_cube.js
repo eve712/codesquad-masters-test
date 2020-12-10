@@ -49,7 +49,6 @@ class PlaneCubeData {
     }
     // step-1에 있는 함수 사용 ex: [R, R, W], 1, R
     processArr() {
-        //call메서드 사용해야할 수 도
         const result = this.wordData.getResultArr(this.currArr, 1, this.way); 
         this.currArr = result;
     }
@@ -61,10 +60,8 @@ class PlaneCubeData {
         else if(v === 'L'||v ==='L\'') this.dataArr.forEach((arr, i) => arr[0] = result[i]);
         else this.dataArr.forEach((arr, i) => arr[2] = result[i]);
     }
-    // 화면에 출력
 }
 
-// step-1의 view클래스와 비슷한 함수 재활용하기
 class ViewPlaneCube {
     constructor(reference, planeCubeData) {
         this.step2Text = reference.step2Text;
@@ -90,11 +87,12 @@ class ViewPlaneCube {
     }
     // 결과를 화면에 출력
     viewResult() {
-        this.step2Result.innerHTML += this.allResults.forEach((dataArr, i) =>{
+        this.allResults.forEach((dataArr, i) =>{
+            this.step2Result.innerHTML +=
             `<div>${this.inputArr[i]}</div>
             <div>${dataArr[0]}</div>
             <div>${dataArr[1]}</div>
-            <div>${dataArr[2]}</div>`;
+            <div>${dataArr[2]}</div><br>`;
         });
     }
 }
