@@ -6,10 +6,10 @@ class PlaneCubeData {
         this.inputArr = [];  //사용자가 입력한 조작법
         this.currArr = [];  //조작할 1차원 배열
         this.way;
-        this.allResults = [];
     }
     // view로부터 배열을 전달받아 순서대로 함수 실행, 데이터 처리
     main(value) {
+        let allResults = [];
         this.tokenize(value);
         this.inputArr.forEach(v => {
             this.pickArr(v);
@@ -17,9 +17,9 @@ class PlaneCubeData {
             this.processArr(); 
             this.fixDataArr(v); 
             let copied = JSON.parse(JSON.stringify(this.dataArr));
-            this.allResults.push(copied);
+            allResults.push(copied);
         });
-        const data = {input: this.inputArr, result: this.allResults};
+        const data = {input: this.inputArr, result: allResults};
         return data;
     }
     // 입력을 받아 의미 단위로 쪼개 inputArr 만드는 함수
@@ -30,8 +30,7 @@ class PlaneCubeData {
         if(idx.length > 0) {
             idx.forEach(idx => valueArr[idx - 1] += '\'');
             this.inputArr = valueArr.filter(el => el !== '\'');
-        }
-        else this.inputArr = valueArr;
+        } else this.inputArr = valueArr;
     }
     // 사용자의 입력에 따라 처리할 배열 선택
     pickArr(v) {
@@ -76,11 +75,21 @@ class ViewPlaneCube {
     handleData(e) {
         e.preventDefault();
         const value = this.step2Text.value;
+        this.viewDefault(value);
         const data = this.planeCubeData.main(value);
         this.inputArr = data.input;
         this.allResults = data.result;
         this.step2Text.value = '';
         this.viewResult();
+    }
+    viewDefault(value) {
+        const dataArr = this.planeCubeData.dataArr;
+        this.step2Result.innerHTML += 
+        `<div>----------------</div>
+        <div>${dataArr[0].join('')}</div>
+        <div>${dataArr[1].join('')}</div>
+        <div>${dataArr[2].join('')}</div><br>
+        <div>CUBE> ${value}</div><br>`;
     }
     viewResult() {
         this.allResults.forEach((dataArr, i) =>{
