@@ -11,6 +11,7 @@ class PlaneCubeData {
     main(value) {
         let allResults = [];
         this.tokenize(value);
+        const quit = this.existsQ();
         this.inputArr.forEach(v => {
             this.pickArr(v);
             this.decideWay(v);
@@ -19,7 +20,7 @@ class PlaneCubeData {
             let copied = JSON.parse(JSON.stringify(this.dataArr));
             allResults.push(copied);
         });
-        const data = {input: this.inputArr, result: allResults};
+        const data = {input: this.inputArr, result: allResults, q: quit};
         return data;
     }
     // 입력을 받아 의미 단위로 쪼개 inputArr 만드는 함수
@@ -32,13 +33,21 @@ class PlaneCubeData {
             this.inputArr = valueArr.filter(el => el !== '\'');
         } else this.inputArr = valueArr;
     }
+    existsQ() {
+        const indexOfQ = this.inputArr.indexOf('Q')
+        if(indexOfQ !== -1) {
+            this.inputArr.splice(indexOfQ);
+            return true;
+        }
+        return false;
+    }
     // 사용자의 입력에 따라 처리할 배열 선택
     pickArr(v) {
         const data = this.dataArr;
         if(v === 'U'||v === 'U\'') this.currArr = data[0];
         else if(v === 'B'||v ==='B\'') this.currArr = data[2];
         else if(v === 'L'||v ==='L\'') this.currArr = data.map(arr => arr[0]);
-        else this.currArr = data.map(arr => arr[2]);
+        else if(v === 'R'||v ==='R\'') this.currArr = data.map(arr => arr[2]);
     }
     // 조작에 따라 방향 정하기 (1,R), (1,L)
     decideWay(v) {
@@ -56,7 +65,7 @@ class PlaneCubeData {
         if(v === 'U'||v === 'U\'') this.dataArr[0] = result;
         else if(v === 'B'||v ==='B\'') this.dataArr[2] = result;
         else if(v === 'L'||v ==='L\'') this.dataArr.forEach((arr, i) => arr[0] = result[i]);
-        else this.dataArr.forEach((arr, i) => arr[2] = result[i]);
+        else if(v === 'R'||v ==='R\'') this.dataArr.forEach((arr, i) => arr[2] = result[i]);
     }
 }
 // ---------------------● View Plane Cube ●-----------------------
@@ -101,7 +110,6 @@ class ViewPlaneCube {
         });
     }
 }
-
 // -------------● 실행 ●-------------
 const planeCubeData = new PlaneCubeData(wordData);
 const viewPlaneCube = new ViewPlaneCube(reference, planeCubeData);
