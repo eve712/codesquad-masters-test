@@ -31,6 +31,8 @@ class RubiksCubeData {
             this.setCurrArr(v);
             this.decideWay(v);
             this.plane.processArr.call(this);
+            if(this.way === 'R') {this.rotateQuarter(v, this.rotateClockWise);}
+            else {this.rotateQuarter(v, this.rotateCounter);}
             this.fixCube(v);
             console.log(JSON.parse(JSON.stringify(cube)));
         });
@@ -60,6 +62,28 @@ class RubiksCubeData {
     decideWay(v) {
         if(v.indexOf('\'') === -1) this.way = 'R';
         else this.way = 'L';
+    }
+    rotateQuarter(v, func) {
+        if(v[0] === 'U') func(this.cube.U);
+        else if(v[0] === 'D') func(this.cube.D);
+        else if(v[0] === 'L') func(this.cube.L);
+        else if(v[0] === 'R') func(this.cube.R);
+        else if(v[0] === 'F') func(this.cube.F);
+        else if(v[0] === 'B') func(this.cube.B);
+    }
+    // 반시계방향 90도 회전
+    rotateCounter(face) {
+        const copied = face.map(e => [...e]);
+        [face[0][0], face[0][1], face[0][2]] = [copied[0][2], copied[1][2], copied[2][2]];
+        [face[1][0], face[1][2]] = [copied[0][1], copied[2][1]];
+        [face[2][0], face[2][1], face[2][2]] = [copied[0][0], copied[1][0], copied[2][0]];
+    }
+    // 시계방향 90도 회전
+    rotateClockWise(face) {
+        const copied = face.map(e => [...e]);
+        [face[0][0], face[0][1], face[0][2]] = [copied[2][0], copied[1][0], copied[0][0]];
+        [face[1][0], face[1][2]] = [copied[2][1], copied[0][1]];
+        [face[2][0], face[2][1], face[2][2]] = [copied[2][2], copied[1][2], copied[0][2]];
     }
     fixCube(v) {
         const cube = this.cube;
