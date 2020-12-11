@@ -31,6 +31,8 @@ class RubiksCubeData {
             this.setCurrArr(v);
             this.decideWay(v);
             this.plane.processArr.call(this);
+            this.fixCube(v);
+            console.log(JSON.parse(JSON.stringify(cube)));
         });
     }
     // 2단계 tokenize + 숫자value 변경 함수
@@ -59,11 +61,34 @@ class RubiksCubeData {
         if(v.indexOf('\'') === -1) this.way = 'R';
         else this.way = 'L';
     }
-    processArr() {
-
-    }
-    fixSideArr() {
-
+    fixCube(v) {
+        const cube = this.cube;
+        if(v[0] === 'U') [cube.F[0], cube.L[0], cube.B[0], cube.R[0]] = this.currArr;
+        else if(v[0] === 'D') [cube.F[2], cube.R[2], cube.B[2], cube.L[2]] = this.currArr;
+        else if(v[0] === 'L') {
+            cube.F.forEach((e, i) => e[0] = this.currArr[0][i]);
+            cube.D.forEach((e, i) => e[0] = this.currArr[1][i]);
+            cube.B.forEach((e, i) => e[2] = this.currArr[2][i]);
+            cube.U.forEach((e, i) => e[0] = this.currArr[3][i]);
+        }
+        else if(v[0] === 'R') {
+            cube.F.forEach((e, i) => e[2] = this.currArr[0][i]);
+            cube.U.forEach((e, i) => e[2] = this.currArr[1][i]);
+            cube.B.forEach((e, i) => e[0] = this.currArr[2][i]);
+            cube.D.forEach((e, i) => e[2] = this.currArr[3][i]);
+        }
+        else if(v[0] === 'F') {
+            cube.U[2] = this.currArr[0];
+            cube.R.forEach((e, i) => e[0] = this.currArr[1][i]);
+            cube.D[0] = this.currArr[2];
+            cube.L.forEach((e, i) => e[2] = this.currArr[3][i]);
+        }
+        else if(v[0] === 'B') {
+            cube.U[0] = this.currArr[0];
+            cube.L.forEach((e, i) => e[0] = this.currArr[1][i]);
+            cube.D[2] = this.currArr[2];
+            cube.R.forEach((e, i) => e[2] = this.currArr[3][i]);
+        }
     }
  } 
 // ---------------------● View Rubiks Cube ●-----------------------
@@ -82,6 +107,7 @@ class ViewRubiksCube {
         const value = this.step3Text.value;
         this.rubiksCubeData.main(value);
         this.viewAll();
+        this.step3Text.value = '';
     }
     //
     viewAll() {
