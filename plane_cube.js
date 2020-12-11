@@ -43,10 +43,10 @@ class PlaneCubeData {
     // 사용자의 입력에 따라 처리할 배열 선택
     pickArr(v) {
         const data = this.dataArr;
-        if(v === 'U'||v === 'U\'') this.currArr = data[0];
-        else if(v === 'B'||v ==='B\'') this.currArr = data[2];
-        else if(v === 'L'||v ==='L\'') this.currArr = data.map(arr => arr[0]);
-        else if(v === 'R'||v ==='R\'') this.currArr = data.map(arr => arr[2]);
+        if(v[0] === 'U') this.currArr = data[0];
+        else if(v[0] === 'B') this.currArr = data[2];
+        else if(v[0] === 'L') this.currArr = data.map(arr => arr[0]);
+        else if(v[0] === 'R') this.currArr = data.map(arr => arr[2]);
     }
     // 조작에 따라 방향 정하기 (1,R), (1,L)
     decideWay(v) {
@@ -61,10 +61,10 @@ class PlaneCubeData {
     // 처리된 배열을 dataArr에 대입해서 데이터 변경
     fixDataArr(v) {
         const result = this.currArr;
-        if(v === 'U'||v === 'U\'') this.dataArr[0] = result;
-        else if(v === 'B'||v ==='B\'') this.dataArr[2] = result;
-        else if(v === 'L'||v ==='L\'') this.dataArr.forEach((arr, i) => arr[0] = result[i]);
-        else if(v === 'R'||v ==='R\'') this.dataArr.forEach((arr, i) => arr[2] = result[i]);
+        if(v[0] === 'U') this.dataArr[0] = result;
+        else if(v[0] === 'B') this.dataArr[2] = result;
+        else if(v[0] === 'L') this.dataArr.forEach((arr, i) => arr[0] = result[i]);
+        else if(v[0] === 'R') this.dataArr.forEach((arr, i) => arr[2] = result[i]);
     }
 }
 // ---------------------● View Plane Cube ●-----------------------
