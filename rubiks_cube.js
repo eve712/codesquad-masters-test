@@ -18,20 +18,24 @@ class RubiksCubeData {
             inputF: [cube.U[2], cube.R.map(e=>e[0]), cube.D[0], cube.L.map(e=>e[2])],
             inputB: [cube.U[0], cube.L.map(e=>e[0]), cube.D[2], cube.R.map(e=>e[2])]
         };
-        this.planeCubeData = planeCubeData;
+        this.wordData = wordData;
+        this.plane = planeCubeData;
         this.inputArr = [];
         this.currArr = [];
+        this.way;
     }
     main(value) {
         this.tokenize(value);
-        const quit = this.planeCubeData.existsQ();
+        const quit = this.plane.existsQ();
         this.inputArr.forEach(v => {
-            this.pickSideArr(v);
+            this.setCurrArr(v);
+            this.decideWay(v);
+            this.plane.processArr.call(this);
         });
     }
     // 2단계 tokenize + 숫자value 변경 함수
     tokenize(value) {
-        this.planeCubeData.tokenize.call(this, value);
+        this.plane.tokenize.call(this, value);
         const idx = [];
         this.inputArr.forEach((el, i) => { if(this.isNumber(el)) idx.push(i); });
         if(idx.length > 0) {
@@ -43,7 +47,7 @@ class RubiksCubeData {
         const bool = typeof parseInt(el) === 'number' && isFinite(parseInt(el));
         return bool;
     }
-    pickSideArr(v) {
+    setCurrArr(v) {
         if(v[0] === 'U') this.currArr = this.materials.inputU;
         else if(v[0] === 'D') this.currArr = this.materials.inputD;
         else if(v[0] === 'L') this.currArr = this.materials.inputL;
@@ -51,8 +55,9 @@ class RubiksCubeData {
         else if(v[0] === 'F') this.currArr = this.materials.inputF;
         else if(v[0] === 'B') this.currArr = this.materials.inputB;
     }
-    decideWay() {
-
+    decideWay(v) {
+        if(v.indexOf('\'') === -1) this.way = 'R';
+        else this.way = 'L';
     }
     processArr() {
 
