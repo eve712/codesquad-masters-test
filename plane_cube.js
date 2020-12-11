@@ -17,7 +17,7 @@ class PlaneCubeData {
             this.decideWay(v);
             this.processArr(); 
             this.fixDataArr(v); 
-            let copied = JSON.parse(JSON.stringify(this.dataArr));
+            let copied = this.dataArr.map(e => [...e]);
             allResults.push(copied);
         });
         const data = {input: this.inputArr, result: allResults, q: quit};
@@ -84,7 +84,7 @@ class ViewPlaneCube {
         const value = this.step2Text.value;
         if(value ==='Q') this.quit();
         else {
-            const init = JSON.parse(JSON.stringify(this.planeCubeData.dataArr));
+            const init = this.planeCubeData.dataArr.map(e => [...e]);
             const data = this.planeCubeData.main(value);
             this.viewAll(data, init);
         }
