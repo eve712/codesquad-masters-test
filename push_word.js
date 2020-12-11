@@ -92,7 +92,10 @@ const reference = {
     step1Result: document.getElementById('step1_result'),
     step2Text: document.getElementById('step2'),
     step2Btn: document.getElementById('step2_btn'),
-    step2Result: document.getElementById('step2_result')
+    step2Result: document.getElementById('step2_result'),
+    step3Text: document.getElementById('step3'),
+    step3Btn: document.getElementById('step3_btn'),
+    step3Result: document.getElementById('step3_result')
 };
 
 // -------------● 실행 ●-------------
