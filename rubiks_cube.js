@@ -10,6 +10,14 @@ const cube = {
 class RubiksCubeData {
     constructor(cube, planeCubeData) {
         this.cube = cube;
+        this.materials = {
+            inputU: [cube.F[0], cube.L[0], cube.B[0], cube.R[0]],
+            inputD: [cube.F[2], cube.R[2], cube.B[2], cube.L[2]],
+            inputL: [cube.F.map(e=>e[0]), cube.D.map(e=>e[0]), cube.B.map(e=>e[2]), cube.U.map(e=>e[0])],
+            inputR: [cube.F.map(e=>e[2]), cube.U.map(e=>e[2]), cube.B.map(e=>e[0]), cube.D.map(e=>e[2])],
+            inputF: [cube.U[2], cube.R.map(e=>e[0]), cube.D[0], cube.L.map(e=>e[2])],
+            inputB: [cube.U[0], cube.L.map(e=>e[0]), cube.D[2], cube.R.map(e=>e[2])]
+        };
         this.planeCubeData = planeCubeData;
         this.inputArr = [];
         this.currArr = [];
@@ -36,7 +44,12 @@ class RubiksCubeData {
         return bool;
     }
     pickSideArr(v) {
-        
+        if(v[0] === 'U') this.currArr = this.materials.inputU;
+        else if(v[0] === 'D') this.currArr = this.materials.inputD;
+        else if(v[0] === 'L') this.currArr = this.materials.inputL;
+        else if(v[0] === 'R') this.currArr = this.materials.inputR;
+        else if(v[0] === 'F') this.currArr = this.materials.inputF;
+        else if(v[0] === 'B') this.currArr = this.materials.inputB;
     }
     decideWay() {
 
