@@ -63,6 +63,7 @@ class RubiksCubeData {
         const bool = typeof parseInt(el) === 'number' && isFinite(parseInt(el));
         return bool;
     }
+    // 조작을 위해 사용할 배열들 업데이트
     setMaterials() {
         const m = this.materials;
         const cube = this.cube;
@@ -71,6 +72,7 @@ class RubiksCubeData {
         m.inputF = [cube.U[2], cube.R.map(e=>e[0]), cube.D[0], cube.L.map(e=>e[2])];
         m.inputB =  [cube.U[0], cube.L.map(e=>e[0]), cube.D[2], cube.R.map(e=>e[2])];
     }
+    // 조작을 위해 사용할 배열을 currArr에 저장
     setCurrArr(v) {
         if(v[0] === 'U') this.currArr = this.materials.inputU;
         else if(v[0] === 'D') this.currArr = this.materials.inputD;
@@ -83,6 +85,7 @@ class RubiksCubeData {
         if(v.indexOf('\'') === -1) this.way = 'R';
         else this.way = 'L';
     }
+    // 매개변수(조작법, this.way)에 따라 90도 회전 
     rotateQuarter(v, func) {
         if(v[0] === 'U') func(this.cube.U);
         else if(v[0] === 'D') func(this.cube.D);
@@ -105,6 +108,7 @@ class RubiksCubeData {
         [face[1][0], face[1][1], face[1][2]] = copied.map(e => e[1]).reverse();
         [face[2][0], face[2][1], face[2][2]] = copied.map(e => e[2]).reverse();
     }
+    // 데이터 조작한 것을 cube 객체에 반영
     fixCube(v) {
         const cube = this.cube;
         if(v[0] === 'U') [cube.F[0], cube.L[0], cube.B[0], cube.R[0]] = this.currArr;
@@ -141,11 +145,13 @@ class RubiksCubeData {
  } 
 // ---------------------● View Rubiks Cube ●-----------------------
 class ViewRubiksCube {
-    constructor(reference, rubiksCubeData) {
+    constructor(reference, rubiksCubeData, cube) {
         this.step3Text = reference.step3Text;
         this.step3Btn = reference.step3Btn;
         this.step3Result = reference.step3Result;
         this.rubiksCubeData = rubiksCubeData;
+        this.cube = cube;
+        this.inputArr = [];
     }
     setEvent() {
         this.step3Btn.addEventListener("click", this.handleData.bind(this));
@@ -153,13 +159,16 @@ class ViewRubiksCube {
     handleData(e) {
         e.preventDefault();
         const value = this.step3Text.value;
-        this.rubiksCubeData.main(value);
-        this.viewAll();
+        if(value === 'Q') this.quit();
+        else {
+            const init = JSON.parse(JSON.stringify(this.cube));
+            const data = this.rubiksCubeData.main(value);
+            this.viewAll(data, init);
+        }
         this.step3Text.value = '';
     }
-    //
-    viewAll() {
-
+    viewAll(data, init) {
+        
     }
     viewDefault() {
 
@@ -173,5 +182,5 @@ class ViewRubiksCube {
 }
 // -------------● 실행 ●-------------
 const rubiksCubeData = new RubiksCubeData(cube, planeCubeData);
-const viewRubiksCube = new ViewRubiksCube(reference, rubiksCubeData);
+const viewRubiksCube = new ViewRubiksCube(reference, rubiksCubeData, cube);
 viewRubiksCube.setEvent();
