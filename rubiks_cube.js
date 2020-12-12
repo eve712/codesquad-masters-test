@@ -163,15 +163,27 @@ class ViewRubiksCube {
         else {
             const init = JSON.parse(JSON.stringify(this.cube));
             const data = this.rubiksCubeData.main(value);
-            this.viewAll(data, init);
+            this.viewAll(data, init, value);
         }
         this.step3Text.value = '';
     }
-    viewAll(data, init) {
-        
+    viewAll(data, init, value) {
+        this.inputArr = data.input;
+        const inputStr = this.getInputStr(data, value);
+        this.viewDefault(init, inputStr);
+        this.viewResult(data.result);
+        if(data.q) this.quit();
     }
-    viewDefault() {
-
+    getInputStr(data, value) {
+        if(data.q) {
+            const i = value.indexOf('Q');
+            return value.substring(0, i);
+        } return value;
+    }
+    viewDefault(init, inputStr) {
+        this.step2Result.innerHTML += 
+        `
+        <div>CUBE> ${inputStr}</div><br>`
     }
     viewResult() {
 
