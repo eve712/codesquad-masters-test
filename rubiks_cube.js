@@ -1,11 +1,11 @@
 // ---------------------● Rubiks Cube Data ●-----------------------
 const cube = {
-    U: new Array(3).fill(new Array(3).fill('B')),
-    D: new Array(3).fill(new Array(3).fill('R')),
-    L: new Array(3).fill(new Array(3).fill('W')),
-    R: new Array(3).fill(new Array(3).fill('G')),
-    F: new Array(3).fill(new Array(3).fill('O')),
-    B: new Array(3).fill(new Array(3).fill('Y'))
+    U: [['B','B','B'], ['B','B','B'], ['B','B','B']],
+    D: [['R','R','R'], ['R','R','R'], ['R','R','R']],
+    L: [['W','W','W'], ['W','W','W'], ['W','W','W']],
+    R: [['G','G','G'], ['G','G','G'], ['G','G','G']],
+    F: [['O','O','O'], ['O','O','O'], ['O','O','O']],
+    B: [['Y','Y','Y'], ['Y','Y','Y'], ['Y','Y','Y']]
 }
 class RubiksCubeData {
     constructor(cube, planeCubeData) {
@@ -13,10 +13,10 @@ class RubiksCubeData {
         this.materials = {
             inputU: [cube.F[0], cube.L[0], cube.B[0], cube.R[0]],
             inputD: [cube.F[2], cube.R[2], cube.B[2], cube.L[2]],
-            inputL: [cube.F.map(e=>e[0]), cube.D.map(e=>e[0]), cube.B.map(e=>e[2]), cube.U.map(e=>e[0])],
-            inputR: [cube.F.map(e=>e[2]), cube.U.map(e=>e[2]), cube.B.map(e=>e[0]), cube.D.map(e=>e[2])],
-            inputF: [cube.U[2], cube.R.map(e=>e[0]), cube.D[0], cube.L.map(e=>e[2])],
-            inputB: [cube.U[0], cube.L.map(e=>e[0]), cube.D[2], cube.R.map(e=>e[2])]
+            inputL: [],
+            inputR: [],
+            inputF: [],
+            inputB: []
         };
         this.wordData = wordData;
         this.plane = planeCubeData;
@@ -28,13 +28,15 @@ class RubiksCubeData {
         this.tokenize(value);
         const quit = this.plane.existsQ();
         this.inputArr.forEach(v => {
+            debugger;
+            this.setMaterials();
             this.setCurrArr(v);
             this.decideWay(v);
             this.plane.processArr.call(this);
-            if(this.way === 'R') {this.rotateQuarter(v, this.rotateClockWise);}
-            else {this.rotateQuarter(v, this.rotateCounter);}
             this.fixCube(v);
-            console.log(JSON.parse(JSON.stringify(cube)));
+            if(this.way === 'R') {this.rotateQuarter(v, this.rotateClockwise);}
+            else {this.rotateQuarter(v, this.rotateCounter);}
+                console.log(JSON.parse(JSON.stringify(cube)));
         });
     }
     // 2단계 tokenize + 숫자value 변경 함수
@@ -50,6 +52,14 @@ class RubiksCubeData {
     isNumber(el) {
         const bool = typeof parseInt(el) === 'number' && isFinite(parseInt(el));
         return bool;
+    }
+    setMaterials() {
+        const m = this.materials;
+        const cube = this.cube;
+        m.inputL = [cube.F.map(e=>e[0]), cube.D.map(e=>e[0]), cube.B.map(e=>e[2]), cube.U.map(e=>e[0])];
+        m.inputR = [cube.F.map(e=>e[2]), cube.U.map(e=>e[2]), cube.B.map(e=>e[0]), cube.D.map(e=>e[2])];
+        m.inputF = [cube.U[2], cube.R.map(e=>e[0]), cube.D[0], cube.L.map(e=>e[2])];
+        m.inputB =  [cube.U[0], cube.L.map(e=>e[0]), cube.D[2], cube.R.map(e=>e[2])];
     }
     setCurrArr(v) {
         if(v[0] === 'U') this.currArr = this.materials.inputU;
@@ -74,16 +84,16 @@ class RubiksCubeData {
     // 반시계방향 90도 회전
     rotateCounter(face) {
         const copied = face.map(e => [...e]);
-        [face[0][0], face[0][1], face[0][2]] = [copied[0][2], copied[1][2], copied[2][2]];
-        [face[1][0], face[1][2]] = [copied[0][1], copied[2][1]];
-        [face[2][0], face[2][1], face[2][2]] = [copied[0][0], copied[1][0], copied[2][0]];
+        [face[0][0], face[0][1], face[0][2]] = copied.map(e => e[2]);
+        [face[1][0], face[1][1], face[1][2]] = copied.map(e => e[1]);
+        [face[2][0], face[2][1], face[2][2]] = copied.map(e => e[0]);
     }
     // 시계방향 90도 회전
-    rotateClockWise(face) {
+    rotateClockwise(face) {
         const copied = face.map(e => [...e]);
-        [face[0][0], face[0][1], face[0][2]] = [copied[2][0], copied[1][0], copied[0][0]];
-        [face[1][0], face[1][2]] = [copied[2][1], copied[0][1]];
-        [face[2][0], face[2][1], face[2][2]] = [copied[2][2], copied[1][2], copied[0][2]];
+        [face[0][0], face[0][1], face[0][2]] = copied.map(e => e[0]).reverse();
+        [face[1][0], face[1][1], face[1][2]] = copied.map(e => e[1]).reverse();
+        [face[2][0], face[2][1], face[2][2]] = copied.map(e => e[2]).reverse();
     }
     fixCube(v) {
         const cube = this.cube;
@@ -101,6 +111,7 @@ class RubiksCubeData {
         cube.U.forEach((e, i) => e[0] = this.currArr[3][i]);
     }
     fixCubeOfR(cube) {
+        const curr = this.currArr;
         cube.F.forEach((e, i) => e[2] = this.currArr[0][i]);
         cube.U.forEach((e, i) => e[2] = this.currArr[1][i]);
         cube.B.forEach((e, i) => e[0] = this.currArr[2][i]);
