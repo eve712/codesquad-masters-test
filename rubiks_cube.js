@@ -25,8 +25,8 @@ class RubiksCubeData {
         this.way;
     }
     main(value) {
+        let allResult = [];
         this.tokenize(value);
-            console.log(this.inputArr);
         const quit = this.plane.existsQ();
         this.inputArr.forEach(v => {
             this.setMaterials();
@@ -36,10 +36,12 @@ class RubiksCubeData {
             this.fixCube(v);
             if(this.way === 'R') {this.rotateQuarter(v, this.rotateClockwise);}
             else {this.rotateQuarter(v, this.rotateCounter);}
-                // console.log(JSON.parse(JSON.stringify(cube)));
+            allResult.push(JSON.parse(JSON.stringify(cube)));
         });
+        const data = {input: this.inputArr, result: allResults, q: quit};
+        return data;
     }
-    // 2단계 tokenize + 숫자value 변경 함수
+    // 2단계 tokenize + 숫자는 조작법 더 써서 inputArr에 조작법 저장
     tokenize(value) {
         this.plane.tokenize.call(this, value);
         const idx = [];
@@ -49,6 +51,7 @@ class RubiksCubeData {
             this.inputArr = this.inputArr.flat();
         }
     }
+    // 숫자를 제거하고 숫자 - 1만큼 앞문자 생성
     spreadNumber(idx) {
         let n = this.inputArr[idx];
         this.inputArr.splice(idx, 1, []);
