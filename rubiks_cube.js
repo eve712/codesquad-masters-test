@@ -26,6 +26,7 @@ class RubiksCubeData {
     }
     main(value) {
         this.tokenize(value);
+            console.log(this.inputArr);
         const quit = this.plane.existsQ();
         this.inputArr.forEach(v => {
             this.setMaterials();
@@ -35,7 +36,7 @@ class RubiksCubeData {
             this.fixCube(v);
             if(this.way === 'R') {this.rotateQuarter(v, this.rotateClockwise);}
             else {this.rotateQuarter(v, this.rotateCounter);}
-                console.log(JSON.parse(JSON.stringify(cube)));
+                // console.log(JSON.parse(JSON.stringify(cube)));
         });
     }
     // 2단계 tokenize + 숫자value 변경 함수
@@ -44,8 +45,15 @@ class RubiksCubeData {
         const idx = [];
         this.inputArr.forEach((el, i) => { if(this.isNumber(el)) idx.push(i); });
         if(idx.length > 0) {
-            idx.forEach(idx => this.inputArr[idx - 1] += this.inputArr[idx])
-            this.inputArr = this.inputArr.filter(el => !this.isNumber(el));
+            idx.forEach(i => this.spreadNumber(i));
+            this.inputArr = this.inputArr.flat();
+        }
+    }
+    spreadNumber(idx) {
+        let n = this.inputArr[idx];
+        this.inputArr.splice(idx, 1, []);
+        for(let i = 0; i < n - 1; i++) {
+            this.inputArr[idx].push(this.inputArr[idx - 1]);
         }
     }
     isNumber(el) {
