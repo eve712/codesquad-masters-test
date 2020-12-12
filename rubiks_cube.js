@@ -28,7 +28,6 @@ class RubiksCubeData {
         this.tokenize(value);
         const quit = this.plane.existsQ();
         this.inputArr.forEach(v => {
-            debugger;
             this.setMaterials();
             this.setCurrArr(v);
             this.decideWay(v);
@@ -56,8 +55,8 @@ class RubiksCubeData {
     setMaterials() {
         const m = this.materials;
         const cube = this.cube;
-        m.inputL = [cube.F.map(e=>e[0]), cube.D.map(e=>e[0]), cube.B.map(e=>e[2]), cube.U.map(e=>e[0])];
-        m.inputR = [cube.F.map(e=>e[2]), cube.U.map(e=>e[2]), cube.B.map(e=>e[0]), cube.D.map(e=>e[2])];
+        m.inputL = [cube.F.map(e=>e[0]), cube.D.map(e=>e[0]), cube.B.map(e=>e[2]).reverse(), cube.U.map(e=>e[0])];
+        m.inputR = [cube.F.map(e=>e[2]), cube.U.map(e=>e[2]), cube.B.map(e=>e[0]).reverse(), cube.D.map(e=>e[2])];
         m.inputF = [cube.U[2], cube.R.map(e=>e[0]), cube.D[0], cube.L.map(e=>e[2])];
         m.inputB =  [cube.U[0], cube.L.map(e=>e[0]), cube.D[2], cube.R.map(e=>e[2])];
     }
@@ -107,14 +106,13 @@ class RubiksCubeData {
     fixCubeOfL(cube) {
         cube.F.forEach((e, i) => e[0] = this.currArr[0][i]);
         cube.D.forEach((e, i) => e[0] = this.currArr[1][i]);
-        cube.B.forEach((e, i) => e[2] = this.currArr[2][i]);
+        cube.B.forEach((e, i) => e[2] = this.currArr[2][2-i]);
         cube.U.forEach((e, i) => e[0] = this.currArr[3][i]);
     }
     fixCubeOfR(cube) {
-        const curr = this.currArr;
         cube.F.forEach((e, i) => e[2] = this.currArr[0][i]);
         cube.U.forEach((e, i) => e[2] = this.currArr[1][i]);
-        cube.B.forEach((e, i) => e[0] = this.currArr[2][i]);
+        cube.B.forEach((e, i) => e[0] = this.currArr[2][2-i]);
         cube.D.forEach((e, i) => e[2] = this.currArr[3][i]);
     }
     fixCubeOfF(cube) {
