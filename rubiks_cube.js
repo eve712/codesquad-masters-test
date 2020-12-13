@@ -201,12 +201,12 @@ class ViewRubiksCube {
             <div>${this.getSideTemplate(init.B)}</div>
         </div>
         <div class="down_side">${this.getSideTemplate(init.D)}</div><br>
-        <div>CUBE> ${inputStr}</div><br>`
+        <div class="input_alltexts">CUBE> ${inputStr}</div><br>`
     }
     viewResult(allResults) {
         allResults.forEach((cube, i) => {
             this.step3Result.innerHTML += 
-            `<div>< ${this.inputArr[i]} ></div>
+            `<div class="input_text">< ${this.inputArr[i]} ></div>
             <div class="up_side">${this.getSideTemplate(cube.U)}</div>
             <div class="middle_side">
             <div>${this.getSideTemplate(cube.L)}</div>
