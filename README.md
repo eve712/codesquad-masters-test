@@ -94,8 +94,17 @@
 
 <br>
 
+## 추가기능
+✱ 경과시간
+ 1. data 클래스에 this.boolOfTime 속성을 true로 설정해 처음에 main 함수가 실행될 때 시간값이 저장되도록 한다.
+ 2. main 함수가 실행되면 saveTime 함수가 실행된다. 이 함수에서 현재 시간을 this.startingTime 속성에 저장하고, this.boolOfTime 속성을 false로 설정해 다음 main 실행 때는 시간 값을 저장하지 않도록한다.
+ 3. view 클래스에서 quit함수가 실행될 때 현재 시간을 구하고, data클래스의 startingTime 속성을 가져와 차이를 구한다.
+ 4. 그 차이를 getTime 함수에서 계산해서 경과 시간을 시간, 분, 초 단위로 반환한다.
+ 5. 경과시간 데이터를 this.time 속성에 저장하고 quit 함수 실행 중 경과 시간을 출력한다.
+
+
 ## 실행결과
 ![step3_1](https://i.postimg.cc/wT9kkqhn/mastertest-step3.png)
 <br>...중간 과정 생략 <br>
 
-![step3_2](https://i.postimg.cc/dQ2BdkT8/mastertest-step3-2.png)
+![step3_2](https://i.postimg.cc/qvzzSHRM/mastertest-step3-2.png)
