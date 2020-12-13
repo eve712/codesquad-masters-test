@@ -1,0 +1,22 @@
+.container {
+    padding: 20px;
+}
+.up_side {
+    width: 43px;
+    text-align: center;
+    padding-left: 58px;
+}
+.middle_side {
+    height: 70px;
+}
+.middle_side > div {
+    float: left;
+    width: 43px;
+    text-align: center;
+    margin: 5px;
+}
+.down_side {
+    width: 43px;
+    text-align: center;
+    padding-left: 58px;
+}
