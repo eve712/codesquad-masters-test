@@ -1,7 +1,7 @@
 // ---------------------● Word Data ●-----------------------
 class WordData {
     constructor() {
-        this.word;
+        this.wordArr;
         this.num;
         this.way;
         this.distance;
@@ -14,7 +14,7 @@ class WordData {
         this.resultArr = this.getResultArr(this.wordArr, this.distance, this.way);
         return this.resultArr.join('');
     }
-    // input 입력값 받아서 배열로 반환
+    // input 입력값 받아서 배열로 전환
     assignValue(value) { 
         const arr = value.split(' ');
         [this.wordArr, this.num, this.way] = [arr[0].split(''), arr[1], arr[2]];   
@@ -75,7 +75,6 @@ class ViewWord {
         e.preventDefault();
         const value = this.step1Text.value;
         this.result = this.wordData.main(value);
-        this.step1Text.value = '';
         this.viewResult();
     }
     viewResult() {
