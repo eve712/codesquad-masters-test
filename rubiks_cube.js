@@ -1,4 +1,3 @@
-// ---------------------● Rubiks Cube Data ●-----------------------
 const cube = {
     U: [['B','B','B'], ['B','B','B'], ['B','B','B']],
     D: [['R','R','R'], ['R','R','R'], ['R','R','R']],
@@ -7,6 +6,7 @@ const cube = {
     F: [['O','O','O'], ['O','O','O'], ['O','O','O']],
     B: [['Y','Y','Y'], ['Y','Y','Y'], ['Y','Y','Y']]
 }
+// ---------------------● Rubiks Cube Data ●-----------------------
 class RubiksCubeData {
     constructor(cube, planeCubeData) {
         this.cube = cube;
@@ -192,7 +192,7 @@ class ViewRubiksCube {
     }
     viewDefault(init, inputStr) {
         this.step3Result.innerHTML += 
-        `<div>--------------------------<div>
+        `<br><div>-----------------------------------<div>
         <div class="up_side">${this.getSideTemplate(init.U)}</div>
         <div class="middle_side">
             <div>${this.getSideTemplate(init.L)}</div>
@@ -221,7 +221,7 @@ class ViewRubiksCube {
         this.step3Result.innerHTML += 
         `<div>CUBE> Q</div>
         <div>경과시간: </div>
-        <div>조작갯수: </div>
+        <div>조작갯수: ${this.inputArr.length}</div>
         <div>이용해주셔서 감사합니다!!! 뚜뚜뚜-</div>`;
     }
 }
