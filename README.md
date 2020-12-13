@@ -96,24 +96,30 @@
 
 ## 추가기능
 ✱ 경과시간
- 1. data 클래스에 this.boolOfTime 속성을 true로 설정해 처음에 main 함수가 실행될 때 시간값이 저장되도록 한다.
- 2. main 함수가 실행되면 saveTime 함수가 실행된다. 이 함수에서 현재 시간을 this.startingTime 속성에 저장하고, this.boolOfTime 속성을 false로 설정해 다음 main 실행 때는 시간 값을 저장하지 않도록한다.
- 3. view 클래스에서 quit함수가 실행될 때 현재 시간을 구하고, data클래스의 startingTime 속성을 가져와 차이를 구한다.
- 4. 그 차이를 getTime 함수에서 계산해서 경과 시간을 시간, 분, 초 단위로 반환한다.
- 5. 경과시간 데이터를 this.time 속성에 저장하고 quit 함수 실행 중 경과 시간을 출력한다.
+ 1. data 클래스에 `this.boolOfTime` 속성을 true로 설정해 처음에 main 함수가 실행될 때 시간값이 저장되도록 한다.
+ 2. main 함수가 실행되면 `saveTime` 함수가 실행된다. 이 함수에서 현재 시간을 `this.startingTime` 속성에 저장하고, `this.boolOfTime` 속성을 false로 설정해 다음 main 실행 때는 시간 값을 저장하지 않도록한다.
+ 3. view 클래스에서 `quit`함수가 실행될 때 현재 시간을 구하고, data클래스의 `startingTime` 속성을 가져와 차이를 구한다.
+ 4. 그 차이를 `getTime` 함수에서 계산해서 경과 시간을 시간, 분, 초 단위로 반환한다.
+ 5. 경과시간 데이터를 `this.time` 속성에 저장하고 `quit` 함수 실행 중 경과 시간을 출력한다.
 
 ✱ 랜덤으로 섞기
- 1. random 버튼을 누르면 이벤트가 발생하면서 함수 실행
- 2. 최소 4에서 최대 8까지 개수로 인덱스를 랜덤으로 뽑고, this.string에 조작법을 더한다.
- 3. rubiksCubeData.main 함수에 this.string을 넘겨주어 실행한다.
- 4. 결과로 객체를 받고, result 속성이 배열인데 마지막 원소만 뽑아 화면에 출력한다.
+ 1. `RandomCube`클래스로 객체 생성하고 `setEvent`함수 호출하면서 매개변수로 몇 번 반복해서 랜덤으로 조작할지 설정한다. (8로 전달하면 8개의 랜덤 조작법을 뽑아서 실행)
+ 2. random 버튼을 누르면 이벤트가 발생하면서 함수 실행
+ 3. 매개변수로 전달한 개수(8)만큼 인덱스를 랜덤으로 뽑고, 해당 인덱스의 조작법을 `this.string`에 더한다.
+ 4. `rubiksCubeData.main()` 함수에 `this.string`을 넘겨주어 실행한다.
+ 5. main 함수에서 처리한 데이터를 객체로 반환하는데, `result` 속성에는 단계별로 실행한 `cube` 결과값들이 들어있다. 최종 결과값만 출력하면 되니까 `result` 속성값의 가장 마지막 원소를 변수 `cube`에 저장한다.
+ 6. `viewRubiksCube.getSideTemplate()` 함수를 사용해서 `cube`의 면들을 템플릿으로 받고, 화면에 출력한다.
+ 7. 마지막으로 `this.string`값을 초기화한다.
 
 <br>
 
 ## 실행결과
-![step3_1](https://i.postimg.cc/wT9kkqhn/mastertest-step3.png)
+![step3_1](https://i.postimg.cc/nr9qJk6j/mastertest-step3-1.png)
 <br>...중간 과정 생략 <br>
 
-![step3_2](https://i.postimg.cc/qvzzSHRM/mastertest-step3-2.png)
+![step3_2](https://i.postimg.cc/rmmShcj9/mastertest-step3-2.png)
 
-![random_cube](https://i.postimg.cc/Hkxpn0DS/2020-12-13-10-49-56.png)
+<br>
+랜덤으로 큐브 섞어서 출력하기
+
+![random_cube](https://i.postimg.cc/wvGDZPbY/mastertest-step3-3.png)
