@@ -1,6 +1,3 @@
-.container {
-    padding: 20px;
-}
 .up_side {
     width: 43px;
     text-align: center;
@@ -19,4 +16,14 @@
     width: 43px;
     text-align: center;
     padding-left: 58px;
+}
+.input_alltexts {
+    background-color: rgb(255, 239, 147);
+    width: 250px;
+    height: 20px;
+    padding-left: 10px;
+    line-height: 24px;
+}
+.input_text {
+    color: red;
 }
