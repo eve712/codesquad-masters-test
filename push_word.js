@@ -94,7 +94,8 @@ const reference = {
     step2Result: document.getElementById('step2_result'),
     step3Text: document.getElementById('step3'),
     step3Btn: document.getElementById('step3_btn'),
-    step3Result: document.getElementById('step3_result')
+    step3Result: document.getElementById('step3_result'),
+    randomBtn: document.getElementById('random_btn')
 };
 
 // -------------● 실행 ●-------------
