@@ -274,11 +274,11 @@ class RandomCube{
         this.rubiksCubeData = rubiksCubeData;
         this.viewRubiksCube = viewRubiksCube;
     }
-    setEvent() {
-        this.randomBtn.addEventListener("click", this.makeRandomCube.bind(this));
+    setEvent(repeat) {
+        this.randomBtn.addEventListener("click", this.makeRandomCube.bind(this, repeat));
     }
-    makeRandomCube() {
-        this.getRandomStr(4, 8);
+    makeRandomCube(repeat) {
+        this.getRandomStr(repeat);
         const data = this.rubiksCubeData.main(this.string);
         const cube = data.result[this.string.length - 1];
         this.step3Result.innerHTML += 
@@ -292,8 +292,7 @@ class RandomCube{
         <div class="down_side">${this.viewRubiksCube.getSideTemplate(cube.D)}</div><br>`;
         this.string = '';
     }
-    getRandomStr(min, max) {
-        const repeat = this.getRandomNum(min, max);
+    getRandomStr(repeat) {
         for(let i = 0; i < repeat; i++) {
             let idx = this.getRandomNum(0, this.char.length - 1);
             this.string += this.char[idx]; 
@@ -303,11 +302,10 @@ class RandomCube{
         const random = Math.floor(Math.random() * (max - min + 1)) + min;
         return random;
     }
-
 }
 // -------------● 실행 ●-------------
 const rubiksCubeData = new RubiksCubeData(cube, planeCubeData);
 const viewRubiksCube = new ViewRubiksCube(reference, rubiksCubeData, cube);
 viewRubiksCube.setEvent();
 const randomCube = new RandomCube(reference, rubiksCubeData, viewRubiksCube);
-randomCube.setEvent();
+randomCube.setEvent(8); // 8번 섞어 랜덤으로 만들기
