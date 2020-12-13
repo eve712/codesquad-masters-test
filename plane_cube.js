@@ -117,6 +117,7 @@ class ViewPlaneCube {
         this.step2Result.innerHTML += 
         `<div>CUBE> Q</div>
         <div>Bye~</div><br>`;
+        this.planeCubeData.dataArr = [['R','R','W'], ['G','C','W'], ['G','B','B']];
     }
 }
 // -------------● 실행 ●-------------
