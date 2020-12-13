@@ -24,9 +24,12 @@ class RubiksCubeData {
         this.currArr = [];
         this.way;
         this.counting = 0;
+        this.startingTime;
+        this.boolOfTime = true;
     }
     main(value) {
         let allResults = [];
+        if(this.boolOfTime){this.saveTime();}
         this.tokenize(value);
         const quit = this.plane.existsQ.call(this);
         this.inputArr.forEach(v => {
@@ -42,6 +45,12 @@ class RubiksCubeData {
         });
         const data = {input: this.inputArr, result: allResults, q: quit};
         return data;
+    }
+    // 경과 시간 구하기 위한 현재 시간 저장 
+    saveTime() {
+        const date = new Date();
+        this.startingTime = date.getTime();
+        this.boolOfTime = false;
     }
     // 2단계 tokenize + 숫자는 조작법 더 써서 inputArr에 조작법 저장
     tokenize(value) {
@@ -155,6 +164,7 @@ class ViewRubiksCube {
         this.cube = cube;
         this.copiedCube = JSON.parse(JSON.stringify(cube));
         this.inputArr = [];
+        this.time;
     }
     setEvent() {
         this.step3Btn.addEventListener("click", this.handleData.bind(this));
@@ -221,13 +231,38 @@ class ViewRubiksCube {
         });
     }
     quit() {
+        this.saveTime();
         this.step3Result.innerHTML += 
         `<div>CUBE> Q</div>
-        <div>경과시간: </div>
+        <div>경과시간: ${this.time.hour}:${this.time.min}:${this.time.sec}</div>
         <div>조작갯수: ${this.rubiksCubeData.counting}</div>
         <div>이용해주셔서 감사합니다!!! 뚜뚜뚜-</div>`;
         this.cube = this.copiedCube;
         this.rubiksCubeData.counting = 0;
+    }
+    // 경과 시간 계산
+    saveTime() {
+        const starting = this.rubiksCubeData.startingTime;
+        const date = new Date()
+        const ending = date.getTime();
+        this.time = this.getTime(ending - starting);
+        this.rubiksCubeData.boolOfTime = true;
+    }
+    //시간 차이 계산
+    getTime(diff) {
+        let sec, min, hour;
+        sec = parseInt(diff / 1000);
+        [min, hour] = ['00', '00']
+        if(sec > 60 && sec < 3600) {
+            hour = '00';
+            min = parseInt(diff / 1000 / 60);
+            sec = parseInt((diff / 1000) % 60);
+        } else if(sec > 3600) {
+            hour = parseInt(diff / 1000 / 60 / 60);
+            min = parseInt((diff / 1000 / 60) % 60);
+            sec = parseInt((diff / 1000) % 60);
+        }
+        return {'sec': sec, 'min': min, 'hour': hour};
     }
 }
 // -------------● 실행 ●-------------
