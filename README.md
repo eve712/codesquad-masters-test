@@ -102,9 +102,18 @@
  4. 그 차이를 getTime 함수에서 계산해서 경과 시간을 시간, 분, 초 단위로 반환한다.
  5. 경과시간 데이터를 this.time 속성에 저장하고 quit 함수 실행 중 경과 시간을 출력한다.
 
+✱ 랜덤으로 섞기
+ 1. random 버튼을 누르면 이벤트가 발생하면서 함수 실행
+ 2. 최소 4에서 최대 8까지 개수로 인덱스를 랜덤으로 뽑고, this.string에 조작법을 더한다.
+ 3. rubiksCubeData.main 함수에 this.string을 넘겨주어 실행한다.
+ 4. 결과로 객체를 받고, result 속성이 배열인데 마지막 원소만 뽑아 화면에 출력한다.
+
+<br>
 
 ## 실행결과
 ![step3_1](https://i.postimg.cc/wT9kkqhn/mastertest-step3.png)
 <br>...중간 과정 생략 <br>
 
 ![step3_2](https://i.postimg.cc/qvzzSHRM/mastertest-step3-2.png)
+
+![random_cube](https://i.postimg.cc/Hkxpn0DS/2020-12-13-10-49-56.png)
