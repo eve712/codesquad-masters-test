@@ -275,12 +275,29 @@ class RandomCube{
         this.viewRubiksCube = viewRubiksCube;
     }
     setEvent(repeat) {
-        this.randomBtn.addEventListener("click", this.makeRandomCube.bind(this, repeat));
+        this.randomBtn.addEventListener("click", this.main.bind(this, repeat));
     }
-    makeRandomCube(repeat) {
+    // 
+    main(repeat) {
         this.getRandomStr(repeat);
         const data = this.rubiksCubeData.main(this.string);
         const cube = data.result[this.string.length - 1];
+        this.viewRandom(cube);
+    }
+    // repeat만큼 반복해서 랜덤으로 조작법 뽑기
+    getRandomStr(repeat) {
+        for(let i = 0; i < repeat; i++) {
+            let idx = this.getRandomNum(0, this.char.length - 1);
+            this.string += this.char[idx]; 
+        }
+    }
+    // 랜덤 숫자 뽑기 → 인덱스 랜덤 뽑기로 사용 
+    getRandomNum (min, max) {
+        const random = Math.floor(Math.random() * (max - min + 1)) + min;
+        return random;
+    }
+    // 랜덤으로 조작된 큐브 화면에 출력
+    viewRandom(cube) {
         this.step3Result.innerHTML += 
         `<div class="up_side">${this.viewRubiksCube.getSideTemplate(cube.U)}</div>
         <div class="middle_side">
@@ -291,16 +308,6 @@ class RandomCube{
         </div>
         <div class="down_side">${this.viewRubiksCube.getSideTemplate(cube.D)}</div><br>`;
         this.string = '';
-    }
-    getRandomStr(repeat) {
-        for(let i = 0; i < repeat; i++) {
-            let idx = this.getRandomNum(0, this.char.length - 1);
-            this.string += this.char[idx]; 
-        }
-    }
-    getRandomNum (min, max) {
-        const random = Math.floor(Math.random() * (max - min + 1)) + min;
-        return random;
     }
 }
 // -------------● 실행 ●-------------
