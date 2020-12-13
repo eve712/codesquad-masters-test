@@ -27,7 +27,7 @@ class RubiksCubeData {
     main(value) {
         let allResults = [];
         this.tokenize(value);
-        const quit = this.plane.existsQ();
+        const quit = this.plane.existsQ.call(this);
         this.inputArr.forEach(v => {
             this.setMaterials();
             this.setCurrArr(v);
@@ -218,7 +218,11 @@ class ViewRubiksCube {
         });
     }
     quit() {
-
+        this.step3Result.innerHTML += 
+        `<div>CUBE> Q</div>
+        <div>경과시간: </div>
+        <div>조작갯수: </div>
+        <div>이용해주셔서 감사합니다!!! 뚜뚜뚜-</div>`;
     }
 }
 // -------------● 실행 ●-------------
