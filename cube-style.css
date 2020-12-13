@@ -18,7 +18,8 @@
     width: 200px;
     height: 18px;
 }
-.container input[type="submit"] {
+.container input[type="submit"],
+#random_btn {
     width: 57px;
     height: 23px;
     border: none;
