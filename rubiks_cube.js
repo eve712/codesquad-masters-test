@@ -151,6 +151,7 @@ class ViewRubiksCube {
         this.step3Result = reference.step3Result;
         this.rubiksCubeData = rubiksCubeData;
         this.cube = cube;
+        this.copiedCube = JSON.parse(JSON.stringify(cube));
         this.inputArr = [];
     }
     setEvent() {
@@ -223,6 +224,7 @@ class ViewRubiksCube {
         <div>경과시간: </div>
         <div>조작갯수: ${this.inputArr.length}</div>
         <div>이용해주셔서 감사합니다!!! 뚜뚜뚜-</div>`;
+        this.cube = this.copiedCube;
     }
 }
 // -------------● 실행 ●-------------
