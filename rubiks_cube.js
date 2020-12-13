@@ -23,12 +23,14 @@ class RubiksCubeData {
         this.inputArr = [];
         this.currArr = [];
         this.way;
+        this.counting = 0;
     }
     main(value) {
         let allResults = [];
         this.tokenize(value);
         const quit = this.plane.existsQ.call(this);
         this.inputArr.forEach(v => {
+            this.counting++;
             this.setMaterials();
             this.setCurrArr(v);
             this.decideWay(v);
@@ -222,9 +224,10 @@ class ViewRubiksCube {
         this.step3Result.innerHTML += 
         `<div>CUBE> Q</div>
         <div>경과시간: </div>
-        <div>조작갯수: ${this.inputArr.length}</div>
+        <div>조작갯수: ${this.rubiksCubeData.counting}</div>
         <div>이용해주셔서 감사합니다!!! 뚜뚜뚜-</div>`;
         this.cube = this.copiedCube;
+        this.rubiksCubeData.counting = 0;
     }
 }
 // -------------● 실행 ●-------------
