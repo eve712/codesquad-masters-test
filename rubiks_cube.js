@@ -184,43 +184,19 @@ class ViewRubiksCube {
     viewDefault(init, inputStr) {
         this.step3Result.innerHTML += 
         `<div class="container">
-            <div class="up_side">
-                <div>${init.U[0].join('')}</div>
-                <div>${init.U[1].join('')}</div>
-                <div>${init.U[2].join('')}</div>
-            </div>
+            <div class="up_side">${this.getSideTemplate(init.U)}</div>
             <div class="middle_side">
-                <div>
-                    <div>${init.L[0].join('')}</div>
-                    <div>${init.L[1].join('')}</div>
-                    <div>${init.L[2].join('')}</div>
-                </div>
-                <div>
-                    <div>${init.F[0].join('')}</div>
-                    <div>${init.F[1].join('')}</div>
-                    <div>${init.F[2].join('')}</div>
-                </div>
-                <div>
-                    <div>${init.R[0].join('')}</div>
-                    <div>${init.R[1].join('')}</div>
-                    <div>${init.R[2].join('')}</div>
-                </div>
-                <div>
-                    <div>${init.B[0].join('')}</div>
-                    <div>${init.B[1].join('')}</div>
-                    <div>${init.B[2].join('')}</div>
-                </div>
+                <div>${this.getSideTemplate(init.L)}</div>
+                <div>${this.getSideTemplate(init.F)}</div>
+                <div>${this.getSideTemplate(init.R)}</div>
+                <div>${this.getSideTemplate(init.B)}</div>
             </div>
-            <div class="down_side">
-                <div>${init.D[0].join('')}</div>
-                <div>${init.D[1].join('')}</div>
-                <div>${init.D[2].join('')}</div>
-            </div>
+            <div class="down_side">${this.getSideTemplate(init.D)}</div>
         </div>
         <div>CUBE> ${inputStr}</div><br>`
     }
     getSideTemplate(doubleArr) {
-        const template = ``;
+        let template = ``;
         doubleArr.forEach(row => {
             const str = row.join('');
             template += `${str}<br>`;
