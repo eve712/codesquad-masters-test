@@ -25,7 +25,7 @@ class RubiksCubeData {
         this.way;
     }
     main(value) {
-        let allResult = [];
+        let allResults = [];
         this.tokenize(value);
         const quit = this.plane.existsQ();
         this.inputArr.forEach(v => {
@@ -36,7 +36,7 @@ class RubiksCubeData {
             this.fixCube(v);
             if(this.way === 'R') {this.rotateQuarter(v, this.rotateClockwise);}
             else {this.rotateQuarter(v, this.rotateCounter);}
-            allResult.push(JSON.parse(JSON.stringify(cube)));
+            allResults.push(JSON.parse(JSON.stringify(cube)));
         });
         const data = {input: this.inputArr, result: allResults, q: quit};
         return data;
@@ -174,6 +174,7 @@ class ViewRubiksCube {
         this.viewResult(data.result);
         if(data.q) this.quit();
     }
+    // 입력값에 Q가 있으면 그 이전까지 문자열 반환
     getInputStr(data, value) {
         if(data.q) {
             const i = value.indexOf('Q');
@@ -181,9 +182,50 @@ class ViewRubiksCube {
         } return value;
     }
     viewDefault(init, inputStr) {
-        this.step2Result.innerHTML += 
-        `
+        this.step3Result.innerHTML += 
+        `<div class="container">
+            <div class="up_side">
+                <div>${init.U[0].join('')}</div>
+                <div>${init.U[1].join('')}</div>
+                <div>${init.U[2].join('')}</div>
+            </div>
+            <div class="middle_side">
+                <div>
+                    <div>${init.L[0].join('')}</div>
+                    <div>${init.L[1].join('')}</div>
+                    <div>${init.L[2].join('')}</div>
+                </div>
+                <div>
+                    <div>${init.F[0].join('')}</div>
+                    <div>${init.F[1].join('')}</div>
+                    <div>${init.F[2].join('')}</div>
+                </div>
+                <div>
+                    <div>${init.R[0].join('')}</div>
+                    <div>${init.R[1].join('')}</div>
+                    <div>${init.R[2].join('')}</div>
+                </div>
+                <div>
+                    <div>${init.B[0].join('')}</div>
+                    <div>${init.B[1].join('')}</div>
+                    <div>${init.B[2].join('')}</div>
+                </div>
+            </div>
+            <div class="down_side">
+                <div>${init.D[0].join('')}</div>
+                <div>${init.D[1].join('')}</div>
+                <div>${init.D[2].join('')}</div>
+            </div>
+        </div>
         <div>CUBE> ${inputStr}</div><br>`
+    }
+    getSideTemplate(doubleArr) {
+        const template = ``;
+        doubleArr.forEach(row => {
+            const str = row.join('');
+            template += `${str}<br>`;
+        });
+        return template;
     }
     viewResult() {
 
