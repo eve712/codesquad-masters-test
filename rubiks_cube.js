@@ -181,20 +181,7 @@ class ViewRubiksCube {
             return value.substring(0, i);
         } return value;
     }
-    viewDefault(init, inputStr) {
-        this.step3Result.innerHTML += 
-        `<div class="container">
-            <div class="up_side">${this.getSideTemplate(init.U)}</div>
-            <div class="middle_side">
-                <div>${this.getSideTemplate(init.L)}</div>
-                <div>${this.getSideTemplate(init.F)}</div>
-                <div>${this.getSideTemplate(init.R)}</div>
-                <div>${this.getSideTemplate(init.B)}</div>
-            </div>
-            <div class="down_side">${this.getSideTemplate(init.D)}</div>
-        </div>
-        <div>CUBE> ${inputStr}</div><br>`
-    }
+    // 면 하나의 템플릿 생성 
     getSideTemplate(doubleArr) {
         let template = ``;
         doubleArr.forEach(row => {
@@ -203,8 +190,32 @@ class ViewRubiksCube {
         });
         return template;
     }
-    viewResult() {
-
+    viewDefault(init, inputStr) {
+        this.step3Result.innerHTML += 
+        `<div>--------------------------<div>
+        <div class="up_side">${this.getSideTemplate(init.U)}</div>
+        <div class="middle_side">
+            <div>${this.getSideTemplate(init.L)}</div>
+            <div>${this.getSideTemplate(init.F)}</div>
+            <div>${this.getSideTemplate(init.R)}</div>
+            <div>${this.getSideTemplate(init.B)}</div>
+        </div>
+        <div class="down_side">${this.getSideTemplate(init.D)}</div><br>
+        <div>CUBE> ${inputStr}</div><br>`
+    }
+    viewResult(allResults) {
+        allResults.forEach((cube, i) => {
+            this.step3Result.innerHTML += 
+            `<div>< ${this.inputArr[i]} ></div>
+            <div class="up_side">${this.getSideTemplate(cube.U)}</div>
+            <div class="middle_side">
+            <div>${this.getSideTemplate(cube.L)}</div>
+            <div>${this.getSideTemplate(cube.F)}</div>
+            <div>${this.getSideTemplate(cube.R)}</div>
+            <div>${this.getSideTemplate(cube.B)}</div>
+            </div>
+            <div class="down_side">${this.getSideTemplate(cube.D)}</div><br>`
+        });
     }
     quit() {
 
