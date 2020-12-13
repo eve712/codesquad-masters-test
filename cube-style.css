@@ -1,3 +1,33 @@
+.title {
+    padding-left: 10px;
+    font-size: 1.6em;
+    color: #333;
+}
+.container {
+    color: #333;
+    padding: 0 0 10px 10px;
+}
+.container > span {
+    font-size: 0.9em;
+    color: #777;
+}
+.container > form {
+    margin: 10px 0;
+}
+.container input[type="text"] {
+    width: 200px;
+    height: 18px;
+}
+.container input[type="submit"] {
+    width: 57px;
+    height: 23px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    background-color: rgb(151, 212, 169);
+    color: #333;
+}
+/* ---------전개도 출력--------- */
 .up_side {
     width: 43px;
     text-align: center;
