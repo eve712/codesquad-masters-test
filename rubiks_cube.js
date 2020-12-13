@@ -265,7 +265,49 @@ class ViewRubiksCube {
         return {'sec': sec, 'min': min, 'hour': hour};
     }
 }
+class RandomCube{
+    constructor(reference, rubiksCubeData, viewRubiksCube) {
+        this.randomBtn = reference.randomBtn;
+        this.step3Result = reference.step3Result;
+        this.char = ['U', 'L', 'F', 'R', 'B', 'D'];
+        this.string = '';
+        this.rubiksCubeData = rubiksCubeData;
+        this.viewRubiksCube = viewRubiksCube;
+    }
+    setEvent() {
+        this.randomBtn.addEventListener("click", this.makeRandomCube.bind(this));
+    }
+    makeRandomCube() {
+        this.getRandomStr(4, 8);
+        const data = this.rubiksCubeData.main(this.string);
+        const cube = data.result[this.string.length - 1];
+        this.step3Result.innerHTML += 
+        `<div class="up_side">${this.viewRubiksCube.getSideTemplate(cube.U)}</div>
+        <div class="middle_side">
+        <div>${this.viewRubiksCube.getSideTemplate(cube.L)}</div>
+        <div>${this.viewRubiksCube.getSideTemplate(cube.F)}</div>
+        <div>${this.viewRubiksCube.getSideTemplate(cube.R)}</div>
+        <div>${this.viewRubiksCube.getSideTemplate(cube.B)}</div>
+        </div>
+        <div class="down_side">${this.viewRubiksCube.getSideTemplate(cube.D)}</div><br>`;
+        this.string = '';
+    }
+    getRandomStr(min, max) {
+        const repeat = this.getRandomNum(min, max);
+        for(let i = 0; i < repeat; i++) {
+            let idx = this.getRandomNum(0, this.char.length - 1);
+            this.string += this.char[idx]; 
+        }
+    }
+    getRandomNum (min, max) {
+        const random = Math.floor(Math.random() * (max - min + 1)) + min;
+        return random;
+    }
+
+}
 // -------------● 실행 ●-------------
 const rubiksCubeData = new RubiksCubeData(cube, planeCubeData);
 const viewRubiksCube = new ViewRubiksCube(reference, rubiksCubeData, cube);
 viewRubiksCube.setEvent();
+const randomCube = new RandomCube(reference, rubiksCubeData, viewRubiksCube);
+randomCube.setEvent();
