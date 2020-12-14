@@ -111,6 +111,12 @@
  6. `viewRubiksCube.getSideTemplate()` 함수를 사용해서 `cube`의 면들을 템플릿으로 받고, 화면에 출력한다.
  7. 마지막으로 `this.string`값과 `this.rubiksCubeData.counting`(조작갯수)를 초기화한다.
 
+✱ 모든 면 맞추면 축하메시지 출력하기
+ 1. 결과값을 모두 출력한 이후(`viewResult()`) `checkComplete()`큐브 검사를 한다.
+ 2. 순서대로 실행한 결과값이 모두 들어있는 `allResults`의 마지막 객체 원소만 빼서 `lastCube` 변수에 저장한다.
+ 3. `Object.entries(lastCube).toString()`으로 문자열로 변환한 후 완전한 큐브로 저장해 두었던 `this.completeCube`와 비교하고, `true`이면 `viewCongratulation()`을 실행한다.
+ 4. `innerHTML`로 축하메시지를 출력한다.
+
 <br>
 
 ## 실행결과
@@ -123,3 +129,9 @@
 랜덤으로 큐브 섞어서 출력하기
 
 ![random_cube](https://i.postimg.cc/wvGDZPbY/mastertest-step3-3.png)
+
+<br>
+
+축하메시지 출력하기
+
+![view_congratulation](https://i.postimg.cc/Gm7LRf8M/2020-12-14-4-21-44.png)
