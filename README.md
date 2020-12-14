@@ -109,7 +109,7 @@
  4. `rubiksCubeData.main()` 함수에 `this.string`을 넘겨주어 실행한다.
  5. main 함수에서 처리한 데이터를 객체로 반환하는데, `result` 속성에는 단계별로 실행한 `cube` 결과값들이 들어있다. 최종 결과값만 출력하면 되니까 `result` 속성값의 가장 마지막 원소를 변수 `cube`에 저장한다.
  6. `viewRubiksCube.getSideTemplate()` 함수를 사용해서 `cube`의 면들을 템플릿으로 받고, 화면에 출력한다.
- 7. 마지막으로 `this.string`값을 초기화한다.
+ 7. 마지막으로 `this.string`값과 `this.rubiksCubeData.counting`(조작갯수)를 초기화한다.
 
 <br>
 
