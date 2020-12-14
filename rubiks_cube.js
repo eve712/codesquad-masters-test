@@ -10,7 +10,7 @@ const cube = {
 class RubiksCubeData {
     constructor(cube, planeCubeData) {
         this.cube = cube;
-        this.copiedCube = JSON.parse(JSON.stringify(cube));
+        this.completeCube = JSON.parse(JSON.stringify(cube));
         this.materials = {
             inputU: [cube.F[0], cube.L[0], cube.B[0], cube.R[0]],
             inputD: [cube.F[2], cube.R[2], cube.B[2], cube.L[2]],
@@ -157,7 +157,7 @@ class RubiksCubeData {
         cube.R.forEach((e, i) => e[2] = this.currArr[3][i]);
     }
     initCube() {
-        this.cube = this.copiedCube;
+        this.cube = this.completeCube;
     }
  } 
 // ---------------------● View Rubiks Cube ●-----------------------
@@ -168,7 +168,7 @@ class ViewRubiksCube {
         this.step3Result = reference.step3Result;
         this.rubiksCubeData = rubiksCubeData;
         this.cube = cube;
-        this.copiedCube = JSON.parse(JSON.stringify(cube));
+        this.completeCube = JSON.parse(JSON.stringify(cube));
         this.inputArr = [];
         this.time;
     }
@@ -191,6 +191,7 @@ class ViewRubiksCube {
         const inputStr = this.getInputStr(data, value);
         this.viewDefault(init, inputStr);
         this.viewResult(data.result);
+        this.checkComplete(data.result);
         if(data.q) this.quit();
     }
     // 입력값에 Q가 있으면 그 이전까지 문자열 반환
@@ -236,6 +237,16 @@ class ViewRubiksCube {
             <div class="down_side">${this.getSideTemplate(cube.D)}</div><br>`
         });
     }
+    checkComplete(allResults) {
+        const lastCube = allResults[allResults.length - 1];
+        const isComplete = 
+            Object.entries(lastCube).toString() === Object.entries(this.completeCube).toString();
+        if(isComplete)this.viewCongratulation();
+    }
+    viewCongratulation() {
+        this.step3Result.innerHTML += 
+        `<div>모든 면을 맞추셨군요 축하합니다!!!</div>`
+    }
     quit() {
         this.saveTime();
         this.step3Result.innerHTML += 
@@ -243,7 +254,7 @@ class ViewRubiksCube {
         <div>경과시간: ${this.time.hour}:${this.time.min}:${this.time.sec}</div>
         <div>조작갯수: ${this.rubiksCubeData.counting}</div>
         <div>이용해주셔서 감사합니다!!! 뚜뚜뚜-</div>`;
-        this.cube = this.copiedCube;
+        this.cube = this.completeCube;
         this.rubiksCubeData.initCube();
         this.rubiksCubeData.counting = 0;
     }
