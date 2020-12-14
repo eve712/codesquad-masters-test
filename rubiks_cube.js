@@ -10,6 +10,7 @@ const cube = {
 class RubiksCubeData {
     constructor(cube, planeCubeData) {
         this.cube = cube;
+        this.copiedCube = JSON.parse(JSON.stringify(cube));
         this.materials = {
             inputU: [cube.F[0], cube.L[0], cube.B[0], cube.R[0]],
             inputD: [cube.F[2], cube.R[2], cube.B[2], cube.L[2]],
@@ -41,7 +42,7 @@ class RubiksCubeData {
             this.fixCube(v);
             if(this.way === 'R') {this.rotateQuarter(v, this.rotateClockwise);}
             else {this.rotateQuarter(v, this.rotateCounter);}
-            allResults.push(JSON.parse(JSON.stringify(cube)));
+            allResults.push(JSON.parse(JSON.stringify(this.cube)));
         });
         const data = {input: this.inputArr, result: allResults, q: quit};
         return data;
@@ -78,6 +79,8 @@ class RubiksCubeData {
     setMaterials() {
         const m = this.materials;
         const cube = this.cube;
+        m.inputU = [cube.F[0], cube.L[0], cube.B[0], cube.R[0]];
+        m.inputD = [cube.F[2], cube.R[2], cube.B[2], cube.L[2]];
         m.inputL = [cube.F.map(e=>e[0]), cube.D.map(e=>e[0]), cube.B.map(e=>e[2]).reverse(), cube.U.map(e=>e[0])];
         m.inputR = [cube.F.map(e=>e[2]), cube.U.map(e=>e[2]), cube.B.map(e=>e[0]).reverse(), cube.D.map(e=>e[2])];
         m.inputF = [cube.U[2], cube.R.map(e=>e[0]), cube.D[0], cube.L.map(e=>e[2])];
@@ -152,6 +155,9 @@ class RubiksCubeData {
         cube.L.forEach((e, i) => e[0] = this.currArr[1][i]);
         cube.D[2] = this.currArr[2];
         cube.R.forEach((e, i) => e[2] = this.currArr[3][i]);
+    }
+    initCube() {
+        this.cube = this.copiedCube;
     }
  } 
 // ---------------------● View Rubiks Cube ●-----------------------
@@ -238,6 +244,7 @@ class ViewRubiksCube {
         <div>조작갯수: ${this.rubiksCubeData.counting}</div>
         <div>이용해주셔서 감사합니다!!! 뚜뚜뚜-</div>`;
         this.cube = this.copiedCube;
+        this.rubiksCubeData.initCube();
         this.rubiksCubeData.counting = 0;
     }
     // 경과 시간 계산
@@ -308,6 +315,7 @@ class RandomCube{
         </div>
         <div class="down_side">${this.viewRubiksCube.getSideTemplate(cube.D)}</div><br>`;
         this.string = '';
+        this.rubiksCubeData.counting = 0;
     }
 }
 // -------------● 실행 ●-------------
